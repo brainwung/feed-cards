@@ -1,11 +1,20 @@
 ---
 name: good-deal-card
-description: 生成"好价卡片"基础组件 — 电商比价/优惠信息卡片，左图右文自适应布局，固定 139px 高度，含商品图、徽标图、标题（图文环绕，2 行截断）、一/二级标签、价格区（特殊字体 + 整数突出）、来源信息行（渠道截断 + meta 不收缩）。当用户提到"好价卡片"、"商品优惠卡片"、"比价卡片"、"deal card"、"product card"时使用。
+description: 生成"好价卡片"基础组件 — 电商比价/优惠信息卡片，支持两种布局：① 左图右文（信息流单条，固定 139px 高度）② 上图下文（两列瀑布流，高度随内容）。含商品图、徽标图、标题（图文环绕，2 行截断）、一/二级标签、价格区（特殊字体 + 整数突出）、来源信息行（渠道截断 + meta 不收缩）。当用户提到"好价卡片"、"商品优惠卡片"、"比价卡片"、"deal card"、"product card"时使用。
 ---
 
-# 好价卡片 (Good Deal Card)
+# 好价卡片 (Good Deal Card) v1.1
 
-电商比价/优惠类信息卡片基础组件。设计稿基准 375px 视口移动端，**已实现自适应**（图片固定 115px，信息区 flex:1）。固定卡片高度 139px。
+电商比价/优惠类信息卡片基础组件。设计稿基准 375px 视口移动端，**已实现自适应**。
+
+## 0. 两种布局
+
+| 布局 | 修饰类 | 高度 | 适用场景 |
+|---|---|---|---|
+| **左图右文（默认）** | `.deal-card` | 固定 139px | 信息流单条推送，纵向滚动列表 |
+| **上图下文（v1.1 新增）** | `.deal-card.deal-card--vertical` | 高度随内容 | 两列瀑布流（推荐页/活动页/分类页） |
+
+两种布局**共享所有内部组件样式**（标题/标签/价格/footer），只在容器层面用修饰类切换布局方向与尺寸。
 
 ## 1. 设计目标
 
@@ -311,3 +320,138 @@ interface GoodDealCardProps {
 - 资源占位（badge.png / shoe.png / icons/*.svg / fonts/price.ttf）
 
 资源文件位于同目录的 `assets/` 子目录下，使用时按需替换。
+
+---
+
+## 16. 上图下文布局 `.deal-card--vertical`（v1.1）
+
+适用于**两列瀑布流**场景。所有内部元素（标题/标签/价格/footer）样式复用，仅容器与少数细节差异。
+
+### 16.1 瀑布流容器
+
+```css
+.deal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+```
+
+- 两列等宽，列间距 5px
+- 在 375 视口 + 5px body padding 下，每列约 180px
+
+### 16.2 卡片容器差异
+
+| 属性 | 水平版 (.deal-card) | 上图下文 (.deal-card--vertical) |
+|---|---|---|
+| flex-direction | row | column |
+| height | 139px 固定 | auto 随内容 |
+| padding | 12px | 0（图片撑满） |
+| border-radius | 6px | **3px** |
+| overflow | visible | hidden（保证图片裁圆） |
+
+### 16.3 图片区
+
+| 属性 | 值 |
+|---|---|
+| 宽度 | 100%（撑满列宽） |
+| 比例 | `aspect-ratio: 1 / 1` |
+| 圆角 | 0（继承卡片顶圆角 + overflow:hidden） |
+
+### 16.4 信息区
+
+| 属性 | 值 |
+|---|---|
+| padding | **9px**（四边一致） |
+| margin-top | 0（覆盖水平版的 -3px） |
+
+### 16.5 各区块垂直间距（覆盖水平版）
+
+| 区块 | margin-top |
+|---|---|
+| 标签行 | 9px（水平版 7px） |
+| 价格行 | 9px（水平版 4px） |
+| Footer | 9px（水平版 7px） |
+
+> 注：价格行因整数 `line-height: 20px` 有约 4px line-box 余白，实际视觉间距 ≈ 13px。
+
+### 16.6 标题字号差异
+
+| 属性 | 水平版 | 上图下文 |
+|---|---|---|
+| 字号 | 14px | 14px |
+| 字重 | **600** | **400 常规** |
+| 行高 | 1.66 (≈23px) | **20px 固定** |
+| 截断 | `height` 硬定 2 行 | `max-height` 软截 2 行（短标题不留白） |
+
+### 16.7 Footer 简化版（左侧只显商城）
+
+```html
+<div class="deal-card__footer">
+  <span class="deal-card__source">
+    <span class="deal-card__source-channel">天猫商城</span>
+    <!-- 不再渲染 divider 和 source-time -->
+  </span>
+  <span class="deal-card__meta">...</span>
+</div>
+```
+
+- 去掉 │ 和时间
+- 右侧 meta（评论 + 推荐率）保留不变
+- `margin-right: 0` 覆盖水平版的 -3px
+
+### 16.8 单卡尺寸估算（375 视口下）
+
+| 区块 | 高度 |
+|---|---|
+| 图片 | 180px |
+| 信息区 padding-top | 9px |
+| 标题（2 行满） | 40px |
+| 标签行（9+15） | 24px |
+| 价格行（9+20+余白） | 33px |
+| Footer（9+15） | 24px |
+| 信息区 padding-bottom | 9px |
+| **合计** | **≈ 319px** |
+
+短标题 1 行时少 20px → 约 299px。
+
+### 16.9 完整示例
+
+```html
+<div class="deal-grid">
+  <a class="deal-card deal-card--vertical" href="#" aria-label="...">
+    <div class="deal-card__image-wrap">
+      <img src="./img.png" alt="商品名" />
+    </div>
+    <div class="deal-card__info">
+      <h3 class="deal-card__title">
+        <img class="deal-card__badge" src="./badge.png" alt="绝对值" />商品标题
+      </h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--emphasis">历史低价</span>
+        <span class="deal-tag">国家补贴</span>
+      </div>
+      <div class="deal-card__price-row">
+        <span class="deal-card__price-current">
+          <span class="symbol">¥</span><span class="integer">368.</span><span class="decimal">1</span>
+        </span>
+        <span class="deal-card__price-note">需用券</span>
+        <s class="deal-card__price-original" aria-label="原价 699 元">¥699</s>
+      </div>
+      <div class="deal-card__footer">
+        <span class="deal-card__source">
+          <span class="deal-card__source-channel">天猫商城</span>
+        </span>
+        <span class="deal-card__meta">...</span>
+      </div>
+    </div>
+  </a>
+  <!-- 第二张卡片 -->
+</div>
+```
+
+### 16.10 注意事项
+
+- "高度随内容" 模式下，同一行两张卡片高度不齐平（标题字数/标签数量不同）
+- 若需对齐，可改用 CSS Grid 的 `align-items: stretch`（默认）或为标题加固定高度
+- 价格区在窄列宽下可能换行；如要避免，可减少同时显示的元素（如去掉 note 或 discount）

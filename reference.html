@@ -34,7 +34,7 @@
     font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
                  "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
     color: var(--deal-text);
-    padding: 12px;
+    padding: 5px;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
@@ -250,6 +250,53 @@
     font-weight: 600;
     line-height: 1;
   }
+
+  /* ============ 上图下文变体 .deal-card--vertical ============ */
+  .deal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    margin-top: 12px;
+  }
+  .deal-card--vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    height: auto;            /* 高度随内容 */
+    padding: 0;              /* 图片撑满，下方信息区单独 padding */
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .deal-card--vertical .deal-card__image-wrap {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;        /* 与卡片顶部圆角无缝衔接 */
+  }
+  .deal-card--vertical .deal-card__info {
+    margin-top: 0;
+    padding: 9px;
+    gap: 0;
+  }
+  .deal-card--vertical .deal-card__tags { margin-top: 9px; }
+  .deal-card--vertical .deal-card__price-row { margin-top: 9px; }
+  .deal-card--vertical .deal-card__footer { margin-top: 9px; }
+  .deal-card--vertical .deal-card__title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    height: auto;
+    max-height: calc(20px * 2);
+  }
+  /* footer 简化版：左侧只显示商城 */
+  .deal-card--vertical .deal-card__footer {
+    margin-right: 0;
+  }
+  .deal-card--vertical .deal-card__source-channel {
+    flex: 0 1 auto;
+  }
 </style>
 </head>
 <body>
@@ -303,6 +350,85 @@
     </div>
   </div>
 </a>
+
+<!-- ============ 上图下文 · 两列瀑布流 ============ -->
+<div class="deal-grid">
+
+  <a class="deal-card deal-card--vertical" href="#"
+     aria-label="绝对值，米家加湿器 4L，现价 368.1 元，原价 699 元，5.5 折，天猫商城，8.8k 评论，100% 推荐">
+    <div class="deal-card__image-wrap">
+      <img src="./shoe.png" alt="米家加湿器" />
+    </div>
+    <div class="deal-card__info">
+      <h3 class="deal-card__title">
+        <img class="deal-card__badge" src="./badge.png" alt="绝对值" />MIJIA 米家 MJJSQ04 智能加湿器 4L
+      </h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--emphasis">历史低价</span>
+        <span class="deal-tag">国家补贴</span>
+      </div>
+      <div class="deal-card__price-row">
+        <span class="deal-card__price-current">
+          <span class="symbol">¥</span><span class="integer">368.</span><span class="decimal">1</span>
+        </span>
+        <span class="deal-card__price-note">需用券</span>
+        <s class="deal-card__price-original" aria-label="原价 699 元">¥699</s>
+      </div>
+      <div class="deal-card__footer">
+        <span class="deal-card__source">
+          <span class="deal-card__source-channel">天猫商城</span>
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item" aria-label="8800 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">8.8k</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="100% 值得推荐">
+            <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--zhi">100%</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </a>
+
+  <a class="deal-card deal-card--vertical" href="#"
+     aria-label="Apple AirPods Pro 第二代，现价 1499 元，原价 1899 元，京东自营，3.2k 评论，95% 推荐">
+    <div class="deal-card__image-wrap">
+      <img src="./shoe.png" alt="AirPods Pro" />
+    </div>
+    <div class="deal-card__info">
+      <h3 class="deal-card__title">Apple AirPods Pro 第二代 USB-C 主动降噪</h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--emphasis">百日新低</span>
+        <span class="deal-tag">PLUS价</span>
+      </div>
+      <div class="deal-card__price-row">
+        <span class="deal-card__price-current">
+          <span class="symbol">¥</span><span class="integer">1499</span>
+        </span>
+        <span class="deal-card__price-note">需用券</span>
+        <s class="deal-card__price-original" aria-label="原价 1899 元">¥1899</s>
+      </div>
+      <div class="deal-card__footer">
+        <span class="deal-card__source">
+          <span class="deal-card__source-channel">京东自营</span>
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item" aria-label="3200 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">3.2k</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="95% 值得推荐">
+            <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--zhi">95%</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </a>
+
+</div>
 
 </body>
 </html>
