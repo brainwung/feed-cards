@@ -63,7 +63,7 @@
 
 把整个仓库放到 `~/.claude/skills/good-deal-card/`，然后在 Claude Code 里说：
 
-> 用 good-deal-card 生成一个 XXX 商品卡片
+> 用 good-deal-card 生成一个国家补贴（标签带图标）、限时抢（不带图标）的横版商品卡片
 
 Claude 会读取 SKILL.md 与 reference.html，按规范生成卡片代码。
 
