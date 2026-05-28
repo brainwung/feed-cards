@@ -13,26 +13,54 @@
 - **两种布局** (v1.1)：
   - 左图右文（信息流单条）
   - 上图下文（两列瀑布流，高度随内容）
+- **5 色标签系统** (v1.2)：CSS 变量驱动，每色支持 描边 / 填充 / 填充+图标 三形态
 - **自适应布局**：图片固定 115×115（水平版）/ 100%(上图下文)
 - **价格特殊字体**：zhi字体
 - **图文环绕标题**：标签 `<img>` float left，标题 2 行硬截断
-- **一/二级标签系统**：红色强调（历史低价/折扣）+ 灰色中性（PLUS/补贴）
 - **防重叠 footer**：渠道名 ellipsis 截断，时间/评论/推荐率始终完整显示
 - **Retina 半像素描边**：标签使用 0.5px border
+
+## 版本历史
+
+### v1.2 (latest)
+- 标签系统重构：CSS 变量驱动（`--tag-color` / `--tag-border` / `--tag-bg`），新增色系仅需 3 行 CSS
+- 新增 4 个色系：`--emphasis`(红 #E62828) / `--green`(绿 #10B354) / `--navy`(深蓝 #23386E) / `--orange`(橙 #FFA129)
+- 新增 2 个修饰类：`--filled` 同色填充底（5%/10%）/ `__icon` 标签内 15px 图标
+- 新增 4 套配套图标：`flash.png`（限量抢）/ `coupon.png`（国家补贴）/ `new.png`（新品）/ `time.png`（限时）
+- 横版示例从 1 张扩展到 3 张
+- SKILL.md 第 6 章重写为 5 小节系统化规范
+
+### v1.1
+- 新增上图下文卡片 `.deal-card--vertical`（两列瀑布流，高度随内容，3px 圆角）
+- 新增 `.deal-grid` 两列等宽容器（gap 5px）
+- 完全复用 v1.0 的标题/标签/价格/footer 组件
+- 页面 body padding 12px → 5px
+
+### v1.0
+- 好价卡片基础组件首个稳定版本
+- 左图右文布局，固定 139px 高度
+- 标题图文环绕（徽标 float + 2 行硬截断）
+- 一/二级标签（红 / 灰）+ Retina 0.5px 描边
+- 价格特殊字体（PriceFont/DIN）+ 整数突出
+- Footer 防重叠（渠道名截断，时间/meta 不收缩）
 
 ## 文件结构
 
 ```
 .
-├── SKILL.md              # Claude Code Skill 规范文档（15 节）
-├── reference.html        # 标准实现示例
+├── SKILL.md              # Claude Code Skill 规范文档
+├── reference.html        # 标准实现示例（含 3 张横版 + 2 张瀑布流）
 ├── badge.png             # 徽标图（如"绝对值"）
 ├── shoe.png              # 商品图占位
 ├── fonts/
 │   └── price.ttf         # 价格特殊字体
 └── icons/
     ├── comment.svg       # 评论图标
-    └── zhi.svg           # "值"图标
+    ├── zhi.svg           # "值"图标
+    ├── flash.png         # 闪电（限量抢/秒杀，配红色标签）
+    ├── coupon.png        # 优惠券（国家补贴/领券，配绿色标签）
+    ├── new.png           # 新品（新品上市，配深蓝色标签）
+    └── time.png          # 时钟（限时/倒计时，配橙色标签）
 ```
 
 ## 在 Claude Code 中使用
