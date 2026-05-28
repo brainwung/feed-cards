@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>好价卡片 · 移动端 375</title>
+<style>
+  @font-face {
+    font-family: 'PriceFont';
+    src: url('./fonts/price.ttf') format('truetype');
+    font-display: swap;
+    font-weight: normal;
+  }
+
+  :root {
+    --deal-red: #FF2741;
+    --deal-text: #1F1F1F;
+    --deal-text-secondary: #666;
+    --deal-text-muted: #999;
+    --deal-border: #D9D9D9;
+    --deal-border-light: #EAEAEA;
+    --deal-image-bg: #F5F5F5;
+    --deal-card-bg: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    background: #F5F5F5;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    color: var(--deal-text);
+    padding: 12px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  /* ============ Good Deal Card · Mobile 375 ============ */
+  .deal-card {
+    display: flex;
+    align-items: stretch;
+    gap: 9px;
+    height: 139px;
+    background: var(--deal-card-bg);
+    border-radius: 6px;
+    padding: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s ease;
+    cursor: pointer;
+  }
+  .deal-card:active { background: #FAFAFA; }
+
+  .deal-card__image-wrap {
+    flex: 0 0 115px;
+    width: 115px;
+    height: 115px;
+    aspect-ratio: 1 / 1;
+    background: var(--deal-image-bg);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .deal-card__image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .deal-card__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: -3px;
+  }
+
+  .deal-card__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+    line-height: 1.66;
+    height: calc(14px * 1.66 * 2);
+    overflow: hidden;
+    word-break: break-word;
+  }
+  .deal-card__badge {
+    height: 15px;
+    width: auto;
+    float: left;
+    margin: 4px 4px 0 0;
+  }
+
+  .deal-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 7px;
+  }
+  .deal-card__tags > * {
+    margin-right: 6px;
+  }
+  .deal-card__tags > *:last-child {
+    margin-right: 0;
+  }
+  /* 二级标签（灰色，默认） */
+  .deal-tag {
+    height: 15px;
+    width: auto;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 3px;
+    border-radius: 3px;
+    border: 0.5px solid rgba(102, 102, 102, 0.4);
+    color: #666666;
+    background: #fff;
+    font-size: 11px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  /* 一级标签（红色强调） */
+  .deal-tag--emphasis {
+    border-color: rgba(230, 40, 40, 0.4);
+    color: #E62828;
+  }
+
+  .deal-card__price-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+  .deal-card__price-row > * {
+    margin-right: 3px;
+  }
+  .deal-card__price-row > *:last-child {
+    margin-right: 0;
+  }
+  .deal-card__price-current {
+    color: #E62828;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: baseline;
+    font-family: 'PriceFont', 'DIN Alternate', 'DIN Condensed', 'Oswald',
+                 'Bebas Neue', 'Impact', 'Helvetica Neue', sans-serif;
+    font-feature-settings: 'tnum';
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+  .deal-card__price-current .symbol {
+    font-size: 13px;
+    line-height: 15px;
+    font-weight: 600;
+  }
+  .deal-card__price-current .integer {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .deal-card__price-current .decimal {
+    font-size: 13px;
+    line-height: 15px;
+  }
+  .deal-card__price-note {
+    color: #E62828;
+    font-size: 13px;
+    line-height: 15px;
+  }
+  .deal-card__price-original {
+    color: #999999;
+    font-size: 13px;
+    line-height: 15px;
+    text-decoration: line-through;
+  }
+
+  .deal-card__footer {
+    margin-top: 7px;
+    margin-right: -3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 9px;
+    color: var(--deal-text-muted);
+    font-size: 12px;
+  }
+  .deal-card__source {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 15px;
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+  .deal-card__source-channel {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .deal-card__divider,
+  .deal-card__source-time {
+    flex: 0 0 auto;
+  }
+  .deal-card__divider {
+    color: var(--deal-border);
+  }
+  .deal-card__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    line-height: 1.2;
+    flex: 0 0 auto;
+  }
+  .deal-card__meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .deal-card__meta-icon {
+    width: 13px;
+    height: 13px;
+    display: block;
+  }
+  .deal-card__meta-value {
+    display: inline-block;
+    width: 29px;
+  }
+  .deal-card__meta-value--zhi {
+    width: 32px;
+  }
+  .deal-card__meta-zhi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+<a class="deal-card" href="#"
+   aria-label="神价格，SK-II 神仙水 230ml 大瓶装，现价 1099 元，原价 1690 元，6.5 折，京东国际，10:42 上线，12.3k 评论，98% 推荐">
+  <div class="deal-card__image-wrap">
+    <img src="./shoe.png" alt="Nike 运动鞋" />
+  </div>
+
+  <div class="deal-card__info">
+    <div>
+      <h3 class="deal-card__title">
+        <img class="deal-card__badge" src="./badge.png" alt="绝对值" />SK-II 神仙水 230ml 大瓶装 PITERA 精华
+      </h3>
+
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--emphasis">历史低价</span>
+        <span class="deal-tag">PLUS专享</span>
+        <span class="deal-tag">跨店满减</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="deal-card__price-row">
+        <span class="deal-card__price-current">
+          <span class="symbol">¥</span><span class="integer">666.</span><span class="decimal">5</span>
+        </span>
+        <span class="deal-card__price-note">需用券</span>
+        <span class="deal-tag deal-tag--emphasis">6.5折</span>
+        <s class="deal-card__price-original" aria-label="原价 1690 元">¥1690</s>
+      </div>
+
+      <div class="deal-card__footer">
+        <span class="deal-card__source">
+          <span class="deal-card__source-channel">京东国际</span>
+          <span class="deal-card__divider">│</span>
+          <span class="deal-card__source-time">10:42</span>
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item" aria-label="8800 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">8.8k</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="100% 值得推荐">
+            <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--zhi">100%</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</a>
+
+</body>
+</html>
