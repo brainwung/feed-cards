@@ -114,6 +114,9 @@
   }
   /* 二级标签（灰色，默认） */
   .deal-tag {
+    --tag-color: #666666;
+    --tag-border: rgba(102, 102, 102, 0.4);
+    --tag-bg: #fff;
     height: 15px;
     width: auto;
     box-sizing: border-box;
@@ -121,17 +124,47 @@
     align-items: center;
     padding: 0 3px;
     border-radius: 3px;
-    border: 0.5px solid rgba(102, 102, 102, 0.4);
-    color: #666666;
-    background: #fff;
+    border: 0.5px solid var(--tag-border);
+    color: var(--tag-color);
+    background: var(--tag-bg);
     font-size: 11px;
     line-height: 1;
     white-space: nowrap;
   }
-  /* 一级标签（红色强调） */
+  /* 一级标签 · 红色强调（默认 emphasis 色 · 配 flash.png 限量抢/限量秒杀类） */
   .deal-tag--emphasis {
-    border-color: rgba(230, 40, 40, 0.4);
-    color: #E62828;
+    --tag-color: #E62828;
+    --tag-border: rgba(230, 40, 40, 0.4);
+  }
+  /* 填充底变体：在任意色基础上加 10% 透明同色背景 */
+  .deal-tag--filled {
+    --tag-bg: rgba(230, 40, 40, 0.1);
+  }
+  /* 绿 · 配 coupon.png 国家补贴/领券立减类 */
+  .deal-tag--green {
+    --tag-color: #10B354;
+    --tag-border: rgba(16, 179, 84, 0.4);
+  }
+  .deal-tag--green.deal-tag--filled { --tag-bg: rgba(16, 179, 84, 0.1); }
+  /* 海军蓝 · 配 new.png 新品/官方旗舰类 */
+  .deal-tag--navy {
+    --tag-color: #23386E;
+    --tag-border: rgba(35, 56, 110, 0.4);
+  }
+  .deal-tag--navy.deal-tag--filled { --tag-bg: rgba(35, 56, 110, 0.05); }
+  /* 橙 · 配 time.png 限时/倒计时类 */
+  .deal-tag--orange {
+    --tag-color: #FFA129;
+    --tag-border: rgba(255, 161, 41, 0.4);
+  }
+  .deal-tag--orange.deal-tag--filled { --tag-bg: rgba(255, 161, 41, 0.05); }
+  /* 标签内图标（如闪电），高度与标签一致，与文字间距 3px，贴齐左边缘 */
+  .deal-tag__icon {
+    height: 15px;
+    width: auto;
+    margin-left: -3px;
+    margin-right: 3px;
+    display: block;
   }
 
   .deal-card__price-row {
@@ -314,9 +347,9 @@
       </h3>
 
       <div class="deal-card__tags">
-        <span class="deal-tag deal-tag--emphasis">历史低价</span>
+        <span class="deal-tag deal-tag--emphasis deal-tag--filled"><img class="deal-tag__icon" src="./icons/flash.png" alt="" aria-hidden="true" />限量抢</span>
+        <span class="deal-tag deal-tag--emphasis">百日新低</span>
         <span class="deal-tag">PLUS专享</span>
-        <span class="deal-tag">跨店满减</span>
       </div>
     </div>
 
@@ -344,6 +377,99 @@
           <span class="deal-card__meta-item" aria-label="100% 值得推荐">
             <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
             <span class="deal-card__meta-value deal-card__meta-value--zhi">100%</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</a>
+
+<!-- ② 横版卡片 · 绿色填充图标标签示例 -->
+<a class="deal-card" href="#"
+   aria-label="领券立减，雀巢咖啡星巴克 派克市场咖啡豆 250g，现价 89.9 元，原价 128 元，京东自营，3.5k 评论，96% 推荐"
+   style="margin-top: 5px;">
+  <div class="deal-card__image-wrap">
+    <img src="./shoe.png" alt="雀巢咖啡豆" />
+  </div>
+  <div class="deal-card__info">
+    <div>
+      <h3 class="deal-card__title">
+        <img class="deal-card__badge" src="./badge.png" alt="绝对值" />Nestlé 雀巢 星巴克 派克市场咖啡豆 250g
+      </h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--green deal-tag--filled"><img class="deal-tag__icon" src="./icons/coupon.png" alt="" aria-hidden="true" />国家补贴</span>
+        <span class="deal-tag deal-tag--emphasis">百日新低</span>
+        <span class="deal-tag">PLUS专享</span>
+      </div>
+    </div>
+    <div>
+      <div class="deal-card__price-row">
+        <span class="deal-card__price-current">
+          <span class="symbol">¥</span><span class="integer">89.</span><span class="decimal">9</span>
+        </span>
+        <span class="deal-card__price-note">需用券</span>
+        <s class="deal-card__price-original" aria-label="原价 128 元">¥128</s>
+      </div>
+      <div class="deal-card__footer">
+        <span class="deal-card__source">
+          <span class="deal-card__source-channel">京东自营</span>
+          <span class="deal-card__divider">│</span>
+          <span class="deal-card__source-time">15:08</span>
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item" aria-label="3500 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">3.5k</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="96% 值得推荐">
+            <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--zhi">96%</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</a>
+
+<!-- ③ 横版卡片 · navy 新品标签示例 -->
+<a class="deal-card" href="#"
+   aria-label="新品上市，索尼 WH-1000XM6 头戴式降噪耳机，现价 2899 元，原价 3399 元，索尼官方旗舰店，2.1k 评论，99% 推荐"
+   style="margin-top: 5px;">
+  <div class="deal-card__image-wrap">
+    <img src="./shoe.png" alt="索尼 WH-1000XM6 降噪耳机" />
+  </div>
+  <div class="deal-card__info">
+    <div>
+      <h3 class="deal-card__title">
+        <img class="deal-card__badge" src="./badge.png" alt="绝对值" />SONY 索尼 WH-1000XM6 头戴式无线降噪耳机
+      </h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--navy deal-tag--filled"><img class="deal-tag__icon" src="./icons/new.png" alt="" aria-hidden="true" />新品</span>
+        <span class="deal-tag deal-tag--orange deal-tag--filled"><img class="deal-tag__icon" src="./icons/time.png" alt="" aria-hidden="true" />明天10点开抢·限量20件</span>
+      </div>
+    </div>
+    <div>
+      <div class="deal-card__price-row">
+        <span class="deal-card__price-current">
+          <span class="symbol">¥</span><span class="integer">2899</span>
+        </span>
+        <span class="deal-card__price-note">已减500</span>
+        <s class="deal-card__price-original" aria-label="原价 3399 元">¥3399</s>
+      </div>
+      <div class="deal-card__footer">
+        <span class="deal-card__source">
+          <span class="deal-card__source-channel">索尼官方旗舰店</span>
+          <span class="deal-card__divider">│</span>
+          <span class="deal-card__source-time">09:30</span>
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item" aria-label="2100 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">2.1k</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="99% 值得推荐">
+            <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--zhi">99%</span>
           </span>
         </span>
       </div>
