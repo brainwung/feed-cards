@@ -20,9 +20,9 @@
 
 ### v1.2 (latest)
 - 标签系统重构：CSS 变量驱动（`--tag-color` / `--tag-border` / `--tag-bg`），新增色系仅需 3 行 CSS
-- 新增 4 个色系：`--emphasis`(红 #E62828) / `--green`(绿 #10B354) / `--navy`(深蓝 #23386E) / `--orange`(橙 #FFA129)
+- 新增 4 个色系：`--emphasis`(红 #E62828 限量抢&低价) / `--green`(绿 #10B354 国家补贴) / `--navy`(深蓝 #23386E 新品) / `--orange`(橙 #FFA129 限时抢)
 - 新增 2 个修饰类：`--filled` 同色填充底（5%/10%）/ `__icon` 标签内 15px 图标
-- 新增 4 套配套图标：`flash.png`（限量抢）/ `coupon.png`（国家补贴）/ `new.png`（新品）/ `time.png`（限时）
+- 新增 4 套配套图标：`flash.png`（限量抢&低价）/ `coupon.png`（国家补贴）/ `new.png`（新品）/ `time.png`（限时）
 - 横版示例从 1 张扩展到 3 张
 - SKILL.md 第 6 章重写为 5 小节系统化规范
 
