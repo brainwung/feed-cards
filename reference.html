@@ -103,11 +103,13 @@
 
   .deal-card__tags {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow: hidden;
     margin-top: 7px;
   }
   .deal-card__tags > * {
     margin-right: 6px;
+    flex-shrink: 0;
   }
   .deal-card__tags > *:last-child {
     margin-right: 0;
@@ -169,13 +171,15 @@
 
   .deal-card__price-row {
     display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+    overflow: hidden;
     margin-top: 4px;
     font-variant-numeric: tabular-nums;
   }
   .deal-card__price-row > * {
     margin-right: 3px;
+    flex-shrink: 0;
   }
   .deal-card__price-row > *:last-child {
     margin-right: 0;
@@ -214,6 +218,27 @@
     font-size: 13px;
     line-height: 15px;
     text-decoration: line-through;
+  }
+
+  /* ============ 售罄状态 .deal-card--soldout ============ */
+  /* 整个价格行（含数字/凑单提示/原价）统一灰色 #999999 */
+  .deal-card--soldout .deal-card__price-current,
+  .deal-card--soldout .deal-card__price-current .symbol,
+  .deal-card--soldout .deal-card__price-current .integer,
+  .deal-card--soldout .deal-card__price-current .decimal,
+  .deal-card--soldout .deal-card__price-note {
+    color: #999999;
+  }
+  /* 售罄前缀 */
+  .deal-card__soldout-label {
+    color: #999999;
+    font-size: 15px;
+    line-height: 1.2;
+  }
+  .deal-card__soldout-divider {
+    color: #D9D9D9;
+    font-size: 15px;
+    line-height: 1.2;
   }
 
   .deal-card__footer {
@@ -477,6 +502,53 @@
   </div>
 </a>
 
+<!-- ④ 横版卡片 · 售罄状态 -->
+<a class="deal-card deal-card--soldout" href="#"
+   aria-label="已售罄，戴森 V12 Detect Slim Fluffy 无线吸尘器，原价 4690 元，戴森官方旗舰店，2.5k 评论，96% 推荐"
+   style="margin-top: 5px;">
+  <div class="deal-card__image-wrap">
+    <img src="./image/shoe.png" alt="戴森 V12 吸尘器" />
+  </div>
+  <div class="deal-card__info">
+    <div>
+      <h3 class="deal-card__title">
+        <img class="deal-card__badge" src="./image/badge.png" alt="绝对值" />Dyson 戴森 V12 Detect Slim Fluffy 无线吸尘器
+      </h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--emphasis">历史低价</span>
+        <span class="deal-tag">官方直降</span>
+      </div>
+    </div>
+    <div>
+      <div class="deal-card__price-row">
+        <span class="deal-card__soldout-label">售罄</span>
+        <span class="deal-card__soldout-divider">|</span>
+        <span class="deal-card__price-current">
+          <span class="symbol">¥</span><span class="integer">3299</span>
+        </span>
+        <s class="deal-card__price-original" aria-label="原价 4690 元">¥4690</s>
+      </div>
+      <div class="deal-card__footer">
+        <span class="deal-card__source">
+          <span class="deal-card__source-channel">戴森官方旗舰店</span>
+          <span class="deal-card__divider">│</span>
+          <span class="deal-card__source-time">昨日 23:00</span>
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item" aria-label="2500 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">2.5k</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="96% 值得推荐">
+            <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--zhi">96%</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</a>
+
 <!-- ============ 上图下文 · 两列瀑布流 ============ -->
 <div class="deal-grid">
 
@@ -557,4 +629,34 @@
 </div>
 
 </body>
+<script>
+  /**
+   * 单行溢出处理：容器只占一行，按从右到左隐藏溢出子元素。
+   * HTML 顺序即优先级（左 = 最高保留优先级，右 = 最先被隐藏）。
+   * 适用：标签行、价格行。
+   */
+  function fitOneLine(container) {
+    var items = Array.from(container.children);
+    items.forEach(function(t) { t.style.display = ''; });
+    for (var i = items.length - 1; i >= 0; i--) {
+      if (container.scrollWidth <= container.clientWidth + 1) break;
+      items[i].style.display = 'none';
+    }
+  }
+
+  function fitAll() {
+    document.querySelectorAll('.deal-card__tags, .deal-card__price-row').forEach(fitOneLine);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fitAll);
+  } else {
+    fitAll();
+  }
+  window.addEventListener('load', fitAll);
+  window.addEventListener('resize', function() {
+    clearTimeout(window.__fitTimer);
+    window.__fitTimer = setTimeout(fitAll, 100);
+  });
+</script>
 </html>
