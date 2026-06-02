@@ -1,8 +1,12 @@
-# product-skill
+# feed-cards
 
-好价卡片（Good Deal Card）基础组件 — Claude Code Skill。
+App 信息流卡片设计系统 — Claude Code Skill。
 
-电商比价/优惠类信息卡片组件，适用于"什么值得买"的商品推送场景。
+包含多种卡片类型，共享同一套视觉语言（字体、颜色、标签系统、间距），适用于 App 首页 / 推荐流 / 活动页等需要混合排列多种信息单元的场景。
+
+**当前包含的卡片类型**：
+- ① **好价卡片** (`.deal-card`)：电商比价 / 优惠商品推送（v1.0 起稳定）
+- 后续将扩展更多原创卡片类型
 
 ## 快速预览
 
@@ -69,9 +73,9 @@
 
 ## 在 Claude Code 中使用
 
-把整个仓库放到 `~/.claude/skills/good-deal-card/`，然后在 Claude Code 里说：
+把整个仓库放到 `~/.claude/skills/feed-cards/`，然后在 Claude Code 里说：
 
-> 用 good-deal-card 生成一个国家补贴（标签带图标）、限时抢（不带图标）的横版商品卡片
+> 用 feed-cards 生成一个国家补贴（标签带图标）、限时抢（不带图标）的横版商品卡片
 
 Claude 会读取 SKILL.md 与 reference.html，按规范生成卡片代码。
 
