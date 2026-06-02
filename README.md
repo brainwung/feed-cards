@@ -22,7 +22,17 @@ App 信息流卡片设计系统 — Claude Code Skill。
 
 ## 版本历史
 
-### v2.0 (latest) — 信息流卡片设计系统
+### v2.1 (latest)
+- **商品大标签** `.deal-tag--product`：原创卡片专用标签，承载关联商品（图 + 商品名 + 价格），高 20px / 圆角 3px / `#F5F5F5` 填充
+- **价格细体字体** `ZhiNumberThin`：`fonts/zhi-number-thin.ttf`，用于商品大标签内的价格
+- **竖版原创卡片**：`.deal-card.deal-card--vertical.deal-card--article` 三类叠加，瀑布流场景的原创卡
+- **商品大标签置顶变体** `.deal-card__tags--top`：在竖版原创卡中将商品大标签置于标题上方
+- **图片比例修饰类**：`.deal-card__image-wrap--3-4` / `--4-3`（默认 1:1），仅竖版原创卡可用
+- **修复 .deal-grid `align-items: start`**：v1.1 隐藏问题，左右两列卡片此前被强行等高拉伸；现按内容独立计算
+- **一级标签语义切换**：原创卡片现支持一级标签，但语义改为内容信号（精华/热门/编辑推荐/年度精选），颜色含义不变
+- **竖版原创卡 footer 简化**：右侧仅保留点赞（隐藏评论），左侧作者区保留
+
+### v2.0 — 信息流卡片设计系统
 - **架构升级**：从单一卡片组件 → 多卡片设计系统，新增「卡片类型」分类
 - Skill name: `good-deal-card` → `feed-cards`（**breaking change**：老名字不再触发）
 - GitHub repo: `product-skill` → `feed-cards`
@@ -75,7 +85,8 @@ App 信息流卡片设计系统 — Claude Code Skill。
 │   ├── article.png       # 原创卡片封面占位 (v2.0)
 │   └── user.png          # 用户头像占位 (v2.0)
 ├── fonts/
-│   └── price.ttf         # 价格特殊字体
+│   ├── price.ttf             # 价格主字体（PriceFont，工业风加粗）
+│   └── zhi-number-thin.ttf   # 价格细体（商品大标签用，v2.1）
 └── icons/
     ├── comment.svg       # 评论图标
     ├── zhi.svg           # "值"图标（商品卡推荐率）

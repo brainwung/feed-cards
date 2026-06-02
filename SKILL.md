@@ -219,6 +219,60 @@ JS（统一处理标签 + 价格行，见第 7.5 节）：检测 `scrollWidth > 
 </div>
 ```
 
+### 6.7 商品大标签变体 `.deal-tag--product`（v2.1 新增）
+
+**用途**：原创卡片中关联具体商品（评测、开箱、攻略等场景），承载商品图 + 商品名 + 价格。**仅 article-card 使用**，商品卡片不需要。
+
+**结构**：
+
+```html
+<span class="deal-tag deal-tag--product">
+  <img class="deal-tag--product__image" src="./image/shoe.png" alt="" aria-hidden="true" />
+  <span class="deal-tag--product__name">佳明 fenix 8 智能运动手表 51mm</span>
+  <span class="deal-tag--product__price">
+    <span class="symbol">¥</span><span class="integer">6280.</span><span class="decimal">0</span>
+  </span>
+</span>
+```
+
+**外壳样式 `.deal-tag--product`**：
+
+| 属性 | 值 |
+|---|---|
+| 高度 | 20px（比普通标签 15px 高） |
+| 圆角 | 3px |
+| 背景 | `#F5F5F5` |
+| 边框 | 无 |
+| 内边距 | `0 6px 0 1px`（左 1px 紧贴图片，右 6px 留白） |
+| 字号 | 11px |
+| 行高 | 14px |
+| 颜色 | `#666666` |
+| 最大宽度 | `100%` 占满标签行 |
+| 溢出 | `overflow: hidden`（用户名 ellipsis 截断） |
+
+**子元素**：
+
+| 元素 | 规则 |
+|---|---|
+| `__image` | 18×18px，圆角 2px，`object-fit: cover`，与商品名间距 6px (margin-right) |
+| `__name` | 11px / 14px / `#666666`，单行 ellipsis 截断（`min-width: 0`），与价格间距 6px (margin-right) |
+| `__price` | 字体 `'ZhiNumberThin'` 细体（fallback PriceFont），3 段拼接（symbol/integer/decimal）字号 10/11/10，颜色 `#666666` |
+
+**收缩优先级**：商品图、价格不收缩；用户名（实际是商品名）优先 ellipsis。
+
+**数据接口**：
+
+```typescript
+interface ProductTag {
+  image: string;       // 商品图 URL
+  name: string;        // 商品名
+  price?: {            // 可选：商品价格
+    integer: string;   // "6280." 含小数点
+    decimal?: string;  // "0" 仅小数数字
+  };
+}
+```
+
 ## 7. 价格区
 
 容器 `display: flex; align-items: baseline; flex-wrap: wrap; margin-top: 4px;`
@@ -651,7 +705,7 @@ UGC 内容卡片，复用商品卡片骨架，差异点全部以 `.deal-card--ar
 | 维度 | 商品卡片 (`.deal-card`) | 原创卡片 (`.deal-card.deal-card--article`) |
 |---|---|---|
 | 价格行 | 显示 | **`display: none` 隐藏**（HTML 可保留空容器或省略） |
-| 标签 | 一级 + 二级，最多 3 个 | **仅二级灰标签**（中性分类如「运动装备」「长测」），1-2 个 |
+| 标签 | 一级 + 二级，最多 3 个 | 一级 + 二级，最多 3 个；**一级语义改为内容信号**（如精华/热门/编辑推荐），不再是促销信号 |
 | Footer 左侧 | `.deal-card__source`：商城名 \| 时间 | `.deal-card__author`：18px 圆头像 + 用户名 + 12px 认证角标 |
 | Footer 右侧 - 第二项 | `值` 图标 + 推荐率 100% | `thumb-up` 图标 + 点赞数 1.2k |
 
@@ -746,7 +800,8 @@ footer 容器 `gap: 9px` 保证左右两侧最少 9px 间距，缩窄时：
 
 ### 17.6 使用约束
 
-- **标签禁用一级红/绿/橙/深蓝色**：原创内容是中性分类，不要用商品促销红做内容标签
+- **一级标签语义切换**：商品卡片用红/绿/深蓝/橙等一级标签传达"促销/降价/政策"信号；原创卡片同样可用一级标签，但语义切换为**内容信号**（精华、热门、编辑推荐、新人扶持、年度精选等）。颜色含义不变：红=最强信号、绿=补贴/福利类、深蓝=身份/官方、橙=时间/限时。
+- **不要混淆语义**：原创卡片不要用一级红打"历史低价"这类促销标签（语义错配），但可以打"年度精选"
 - **价格行处理**：HTML 可省略 `.deal-card__price-row` div，或保留空 div（CSS 已隐藏，不影响布局）。保留更便于运营数据从同一接口切换商品/原创两种状态
 - **认证角标可选**：`.deal-card__author-badge` 是可选元素，无认证用户直接不渲染该 `<img>` 即可
 - **不支持上图下文布局**：v2.0 article-card 仅水平版。瀑布流形态待后续版本
@@ -769,3 +824,80 @@ interface ArticleCardProps {
   onClick?: () => void;
 }
 ```
+
+### 17.8 竖版原创卡片（v2.1 新增）
+
+article-card 与 vertical 布局**可叠加使用**，构成两列瀑布流场景下的原创卡片。
+
+**类名组合**：
+```html
+<a class="deal-card deal-card--vertical deal-card--article" href="#">
+```
+
+**与横版原创卡片的差异**：
+
+| 维度 | 横版原创卡 (`.deal-card.deal-card--article`) | 竖版原创卡 (再叠加 `.deal-card--vertical`) |
+|---|---|---|
+| 商品图位置 | 左侧 115×115px | 顶部 100% 宽，比例可选（见下方） |
+| 信息区 padding | 0（继承自横版 12px 卡片 padding） | **9px 四边一致**（与卡片边界保持安全距离） |
+| 信息区排列 | flex 默认（`space-between`） | **`flex-start` 紧凑排列**（覆盖 vertical 的 space-between，避免空间被拉伸） |
+| 各区块间距 | `margin-top: 7px` 等 | **统一 9px**（标签 / footer / 商品大标签上下） |
+| Footer 评论项 | 显示 | **隐藏**（`.deal-card__meta-item--comment` `display: none`），仅保留点赞 |
+| Footer 左侧 | 作者区（同横版） | 同左：作者头像 + 用户名 + 认证角标 |
+
+**商品大标签置顶变体**：当卡片用了 `.deal-tag--product` 商品大标签时，标签行**置于标题上方**：
+
+```html
+<div class="deal-card__info">
+  <div class="deal-card__tags deal-card__tags--top">
+    <span class="deal-tag deal-tag--product">...</span>
+  </div>
+  <h3 class="deal-card__title">...</h3>
+  <div class="deal-card__price-row" aria-hidden="true"></div>
+  <div class="deal-card__footer">...</div>
+</div>
+```
+
+- `.deal-card__tags--top` 修饰类：`margin-top: 0`（紧贴信息区顶部 / 距图片 9px），`margin-bottom: 9px`（距标题 9px）
+- 普通标签行（无 `--top`）则按默认顺序（标题之后）
+
+### 17.9 图片比例修饰类（v2.1 新增）
+
+仅适用于竖版原创卡片，可视内容性质选择：
+
+| 修饰类 | 比例 | 适用场景 |
+|---|---|---|
+| 默认（无修饰类） | **1:1** | 数码/数字内容/横平竖直构图 |
+| `.deal-card__image-wrap--3-4` | **3:4** | 旅行/人物/服饰/竖屏摄影 |
+| `.deal-card__image-wrap--4-3` | **4:3** | 数码/横屏视频/横向构图 |
+
+**用法**：
+
+```html
+<!-- 1:1 默认 -->
+<div class="deal-card__image-wrap">
+<!-- 3:4 -->
+<div class="deal-card__image-wrap deal-card__image-wrap--3-4">
+<!-- 4:3 -->
+<div class="deal-card__image-wrap deal-card__image-wrap--4-3">
+```
+
+**约束**：
+
+- 同一两列瀑布流内**允许混合比例**，左右两列卡片高度自然不齐（瀑布流应有效果）
+- 配合 `.deal-grid` 容器的 `align-items: start`（v2.1 新增）确保两张卡片不被强行拉伸到等高
+- 横版卡片不支持比例修饰类（横版图片始终 115×115）
+
+### 17.10 .deal-grid 容器规则（v2.1 修订）
+
+```css
+.deal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  align-items: start;   /* v2.1 新增：每张卡片按内容高度独立计算 */
+}
+```
+
+**v1.1 隐藏问题**：当时 grid 默认 `align-items: stretch`，左右两列卡片被强行拉伸到等高。商品卡片结构相同所以未暴露；引入原创卡 + 不同图片比例后才显现。v2.1 修复。
+

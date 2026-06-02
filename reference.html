@@ -11,6 +11,12 @@
     font-display: swap;
     font-weight: normal;
   }
+  @font-face {
+    font-family: 'ZhiNumberThin';
+    src: url('./fonts/zhi-number-thin.ttf') format('truetype');
+    font-display: swap;
+    font-weight: normal;
+  }
 
   :root {
     --deal-red: #FF2741;
@@ -168,6 +174,56 @@
     margin-right: 3px;
     display: block;
   }
+
+  /* ============ 商品大标签 .deal-tag--product ============ */
+  /* article-card 专用：占整个标签行，展示关联商品（图 + 商品名） */
+  .deal-tag--product {
+    height: 20px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 6px 0 1px;
+    border: 0;
+    border-radius: 3px;
+    background: #F5F5F5;
+    color: #666666;
+    font-size: 11px;
+    line-height: 14px;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .deal-tag--product__image {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    margin-right: 6px;
+    border-radius: 2px;
+    object-fit: cover;
+    display: block;
+  }
+  .deal-tag--product__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    margin-right: 6px;
+  }
+  /* 商品大标签内的价格 — 复用价格区结构，覆盖颜色与字号 */
+  .deal-tag--product__price {
+    flex: 0 0 auto;
+    color: #666666;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: baseline;
+    font-family: 'ZhiNumberThin', 'PriceFont', 'DIN Alternate', 'DIN Condensed',
+                 'Helvetica Neue', sans-serif;
+    font-feature-settings: 'tnum';
+    font-variant-numeric: tabular-nums;
+  }
+  .deal-tag--product__price .symbol { font-size: 10px; line-height: 14px; }
+  .deal-tag--product__price .integer { font-size: 11px; line-height: 14px; }
+  .deal-tag--product__price .decimal { font-size: 10px; line-height: 14px; }
 
   .deal-card__price-row {
     display: flex;
@@ -336,6 +392,23 @@
   .deal-card__meta-value--like {
     width: 29px;
   }
+  /* 竖版原创卡片：footer 右侧只保留点赞，去掉评论 */
+  .deal-card--vertical.deal-card--article .deal-card__meta-item--comment {
+    display: none;
+  }
+  /* 竖版原创卡片：信息区紧凑排列（覆盖 vertical 默认的 space-between） */
+  .deal-card--vertical.deal-card--article .deal-card__info {
+    justify-content: flex-start;
+  }
+  /* 竖版原创卡片 + 商品大标签变体：标签行置于标题上方，距图片 9px，距标题 9px */
+  .deal-card--vertical.deal-card--article .deal-card__tags--top {
+    margin-top: 0;
+    margin-bottom: 9px;
+  }
+  /* 竖版原创卡片 · 普通标签行：上方 9px（下方间距由后续元素的 margin-top 提供） */
+  .deal-card--vertical.deal-card--article .deal-card__tags:not(.deal-card__tags--top) {
+    margin-top: 9px;
+  }
   .deal-card__meta-zhi {
     display: inline-flex;
     align-items: center;
@@ -354,6 +427,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5px;
+    align-items: start;
     margin-top: 12px;
   }
   .deal-card--vertical {
@@ -373,6 +447,9 @@
     aspect-ratio: 1 / 1;
     border-radius: 0;        /* 与卡片顶部圆角无缝衔接 */
   }
+  /* 图片比例修饰类（仅竖版原创卡片使用） */
+  .deal-card--vertical .deal-card__image-wrap--3-4 { aspect-ratio: 3 / 4; }
+  .deal-card--vertical .deal-card__image-wrap--4-3 { aspect-ratio: 4 / 3; }
   .deal-card--vertical .deal-card__info {
     margin-top: 0;
     padding: 9px;
@@ -449,100 +526,8 @@
   </div>
 </a>
 
-<!-- ② 横版卡片 · 绿色填充图标标签示例 -->
-<a class="deal-card" href="#"
-   aria-label="领券立减，雀巢咖啡星巴克 派克市场咖啡豆 250g，现价 89.9 元，原价 128 元，京东自营，3.5k 评论，96% 推荐"
-   style="margin-top: 5px;">
-  <div class="deal-card__image-wrap">
-    <img src="./image/shoe.png" alt="雀巢咖啡豆" />
-  </div>
-  <div class="deal-card__info">
-    <div>
-      <h3 class="deal-card__title">
-        <img class="deal-card__badge" src="./image/badge.png" alt="绝对值" />Nestlé 雀巢 星巴克 派克市场咖啡豆 250g
-      </h3>
-      <div class="deal-card__tags">
-        <span class="deal-tag deal-tag--green deal-tag--filled"><img class="deal-tag__icon" src="./icons/coupon.png" alt="" aria-hidden="true" />国家补贴</span>
-        <span class="deal-tag deal-tag--emphasis">百日新低</span>
-        <span class="deal-tag">PLUS专享</span>
-      </div>
-    </div>
-    <div>
-      <div class="deal-card__price-row">
-        <span class="deal-card__price-current">
-          <span class="symbol">¥</span><span class="integer">89.</span><span class="decimal">9</span>
-        </span>
-        <span class="deal-card__price-note">需用券</span>
-        <s class="deal-card__price-original" aria-label="原价 128 元">¥128</s>
-      </div>
-      <div class="deal-card__footer">
-        <span class="deal-card__source">
-          <span class="deal-card__source-channel">京东自营</span>
-          <span class="deal-card__divider">│</span>
-          <span class="deal-card__source-time">15:08</span>
-        </span>
-        <span class="deal-card__meta">
-          <span class="deal-card__meta-item" aria-label="3500 条评论">
-            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
-            <span class="deal-card__meta-value">3.5k</span>
-          </span>
-          <span class="deal-card__meta-item" aria-label="96% 值得推荐">
-            <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
-            <span class="deal-card__meta-value deal-card__meta-value--zhi">96%</span>
-          </span>
-        </span>
-      </div>
-    </div>
-  </div>
-</a>
 
-<!-- ③ 横版卡片 · navy 新品标签示例 -->
-<a class="deal-card" href="#"
-   aria-label="新品上市，索尼 WH-1000XM6 头戴式降噪耳机，现价 2899 元，原价 3399 元，索尼官方旗舰店，2.1k 评论，99% 推荐"
-   style="margin-top: 5px;">
-  <div class="deal-card__image-wrap">
-    <img src="./image/shoe.png" alt="索尼 WH-1000XM6 降噪耳机" />
-  </div>
-  <div class="deal-card__info">
-    <div>
-      <h3 class="deal-card__title">
-        <img class="deal-card__badge" src="./image/badge.png" alt="绝对值" />SONY 索尼 WH-1000XM6 头戴式无线降噪耳机
-      </h3>
-      <div class="deal-card__tags">
-        <span class="deal-tag deal-tag--navy deal-tag--filled"><img class="deal-tag__icon" src="./icons/new.png" alt="" aria-hidden="true" />新品</span>
-        <span class="deal-tag deal-tag--orange deal-tag--filled"><img class="deal-tag__icon" src="./icons/time.png" alt="" aria-hidden="true" />明天10点开抢·限量20件</span>
-      </div>
-    </div>
-    <div>
-      <div class="deal-card__price-row">
-        <span class="deal-card__price-current">
-          <span class="symbol">¥</span><span class="integer">2899</span>
-        </span>
-        <span class="deal-card__price-note">已减500</span>
-        <s class="deal-card__price-original" aria-label="原价 3399 元">¥3399</s>
-      </div>
-      <div class="deal-card__footer">
-        <span class="deal-card__source">
-          <span class="deal-card__source-channel">索尼官方旗舰店</span>
-          <span class="deal-card__divider">│</span>
-          <span class="deal-card__source-time">09:30</span>
-        </span>
-        <span class="deal-card__meta">
-          <span class="deal-card__meta-item" aria-label="2100 条评论">
-            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
-            <span class="deal-card__meta-value">2.1k</span>
-          </span>
-          <span class="deal-card__meta-item" aria-label="99% 值得推荐">
-            <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
-            <span class="deal-card__meta-value deal-card__meta-value--zhi">99%</span>
-          </span>
-        </span>
-      </div>
-    </div>
-  </div>
-</a>
-
-<!-- ④ 横版卡片 · 售罄状态 -->
+<!-- ② 横版卡片 · 售罄状态 -->
 <a class="deal-card deal-card--soldout" href="#"
    aria-label="已售罄，戴森 V12 Detect Slim Fluffy 无线吸尘器，原价 4690 元，戴森官方旗舰店，2.5k 评论，96% 推荐"
    style="margin-top: 5px;">
@@ -589,7 +574,7 @@
   </div>
 </a>
 
-<!-- ⑤ 横版卡片 · 原创卡片 article-card -->
+<!-- ③ 横版卡片 · 原创卡片 article-card（带商品大标签变体） -->
 <a class="deal-card deal-card--article" href="#"
    aria-label="原创内容，开箱体验：佳明 fenix 8 智能运动手表 50 天深度评测，作者 山野徒步者，1.2k 赞"
    style="margin-top: 5px;">
@@ -602,8 +587,13 @@
         开箱体验 · 佳明 fenix 8 智能运动手表 50 天深度评测，越野跑选它对吗
       </h3>
       <div class="deal-card__tags">
-        <span class="deal-tag">运动装备</span>
-        <span class="deal-tag">长测</span>
+        <span class="deal-tag deal-tag--product">
+          <img class="deal-tag--product__image" src="./image/shoe.png" alt="" aria-hidden="true" />
+          <span class="deal-tag--product__name">佳明 fenix 8 智能运动手表 51mm</span>
+          <span class="deal-tag--product__price">
+            <span class="symbol">¥</span><span class="integer">6280.</span><span class="decimal">0</span>
+          </span>
+        </span>
       </div>
     </div>
     <div>
@@ -624,6 +614,47 @@
           <span class="deal-card__meta-item" aria-label="1200 个赞">
             <img class="deal-card__meta-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
             <span class="deal-card__meta-value deal-card__meta-value--like">1.2k</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</a>
+
+<!-- ④ 横版卡片 · 常规原创卡片（普通二级灰标签） -->
+<a class="deal-card deal-card--article" href="#"
+   aria-label="原创内容，三亚后海冲浪 7 天保姆级攻略，作者 暖暖夏夏，2.5k 赞"
+   style="margin-top: 5px;">
+  <div class="deal-card__image-wrap">
+    <img src="./image/article.png" alt="原创内容封面" />
+  </div>
+  <div class="deal-card__info">
+    <div>
+      <h3 class="deal-card__title">
+        三亚后海冲浪 7 天保姆级攻略，从零基础到能独立下海全靠这份清单
+      </h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--emphasis">年度精选</span>
+        <span class="deal-tag">户外旅行</span>
+        <span class="deal-tag">新人友好</span>
+      </div>
+    </div>
+    <div>
+      <div class="deal-card__price-row" aria-hidden="true"></div>
+
+      <div class="deal-card__footer">
+        <span class="deal-card__author">
+          <img class="deal-card__author-avatar" src="./image/user.png" alt="" aria-hidden="true" />
+          <span class="deal-card__author-name">暖暖夏夏</span>
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item" aria-label="412 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">412</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="2500 个赞">
+            <img class="deal-card__meta-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--like">2.5k</span>
           </span>
         </span>
       </div>
@@ -702,6 +733,76 @@
           <span class="deal-card__meta-item" aria-label="95% 值得推荐">
             <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
             <span class="deal-card__meta-value deal-card__meta-value--zhi">95%</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 竖版原创卡片 ① · 常规标签 + 3:4 图片 -->
+  <a class="deal-card deal-card--vertical deal-card--article" href="#"
+     aria-label="原创内容，京都赏枫 6 日散步路线，作者 阿野旅行家，1.8k 赞">
+    <div class="deal-card__image-wrap deal-card__image-wrap--3-4">
+      <img src="./image/article.png" alt="原创内容封面" />
+    </div>
+    <div class="deal-card__info">
+      <h3 class="deal-card__title">京都赏枫 6 日散步路线 · 避开人潮的冷门寺院清单</h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag deal-tag--emphasis">编辑推荐</span>
+        <span class="deal-tag">深度游</span>
+      </div>
+      <div class="deal-card__price-row" aria-hidden="true"></div>
+      <div class="deal-card__footer">
+        <span class="deal-card__author">
+          <img class="deal-card__author-avatar" src="./image/user.png" alt="" aria-hidden="true" />
+          <span class="deal-card__author-name">阿野旅行家</span>
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item deal-card__meta-item--comment" aria-label="285 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">285</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="1800 个赞">
+            <img class="deal-card__meta-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--like">1.8k</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </a>
+
+  <!-- 竖版原创卡片 ② · 商品大标签 -->
+  <a class="deal-card deal-card--vertical deal-card--article" href="#"
+     aria-label="原创内容，AirPods Pro 2 一年使用感受，作者 数码诚子，3.4k 赞">
+    <div class="deal-card__image-wrap">
+      <img src="./image/article.png" alt="原创内容封面" />
+    </div>
+    <div class="deal-card__info">
+      <div class="deal-card__tags deal-card__tags--top">
+        <span class="deal-tag deal-tag--product">
+          <img class="deal-tag--product__image" src="./image/shoe.png" alt="" aria-hidden="true" />
+          <span class="deal-tag--product__name">AirPods Pro 2 USB-C</span>
+          <span class="deal-tag--product__price">
+            <span class="symbol">¥</span><span class="integer">1499.</span><span class="decimal">0</span>
+          </span>
+        </span>
+      </div>
+      <h3 class="deal-card__title">AirPods Pro 2 一年使用感受 · 真无线耳机还有更优解吗</h3>
+      <div class="deal-card__price-row" aria-hidden="true"></div>
+      <div class="deal-card__footer">
+        <span class="deal-card__author">
+          <img class="deal-card__author-avatar" src="./image/user.png" alt="" aria-hidden="true" />
+          <span class="deal-card__author-name">数码诚子</span>
+          <img class="deal-card__author-badge" src="./icons/yellow-v.png" alt="认证作者" />
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item deal-card__meta-item--comment" aria-label="612 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">612</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="3400 个赞">
+            <img class="deal-card__meta-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--like">3.4k</span>
           </span>
         </span>
       </div>
