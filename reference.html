@@ -19,21 +19,90 @@
   }
 
   :root {
+    /* 设计 Token — 浅色模式基线 */
+    --c-text-primary: #333333;     /* 主文字（标题、商品名、需用券价格行） */
+    --c-text-secondary: #666666;   /* 次级文字（二级标签、商品大标签） */
+    --c-text-muted: #999999;       /* 辅助文字（footer、原价、售罄） */
+    --c-brand-red: #E62828;        /* 价格红、一级标签红 */
+    --c-bg-page: #F5F5F5;          /* 页面背景、商品图底色、商品大标签底色 */
+    --c-bg-card: #FFFFFF;          /* 卡片背景 */
+    --c-bg-card-active: #FAFAFA;   /* 卡片按下态 */
+    --c-divider: #D9D9D9;          /* 分隔符、原价附近的分割线、灰色边框 */
+    --c-border-light: #EAEAEA;     /* 极浅描边 */
+    --c-bg-product-tag: #F5F5F5;   /* 商品大标签底色（与页面背景区分，深色下高于页面背景） */
+
+    /* 标签变体填充透明度（不变） */
+    --tag-red-bg: rgba(230, 40, 40, 0.1);
+    --tag-red-border: rgba(230, 40, 40, 0.4);
+    --tag-grey-border: rgba(102, 102, 102, 0.4);
+    --tag-green: #10B354;
+    --tag-green-bg: rgba(16, 179, 84, 0.1);
+    --tag-green-border: rgba(16, 179, 84, 0.4);
+    --tag-navy: #23386E;
+    --tag-navy-bg: rgba(35, 56, 110, 0.05);
+    --tag-navy-border: rgba(35, 56, 110, 0.4);
+    --tag-orange: #FFA129;
+    --tag-orange-bg: rgba(255, 161, 41, 0.05);
+    --tag-orange-border: rgba(255, 161, 41, 0.4);
+
+    /* 兼容历史变量（已弃用，保留以防外部代码引用） */
     --deal-red: #FF2741;
-    --deal-text: #1F1F1F;
-    --deal-text-secondary: #666;
-    --deal-text-muted: #999;
-    --deal-border: #D9D9D9;
-    --deal-border-light: #EAEAEA;
-    --deal-image-bg: #F5F5F5;
-    --deal-card-bg: #FFFFFF;
+    --deal-text: var(--c-text-primary);
+    --deal-text-secondary: var(--c-text-secondary);
+    --deal-text-muted: var(--c-text-muted);
+    --deal-border: var(--c-divider);
+    --deal-border-light: var(--c-border-light);
+    --deal-image-bg: var(--c-bg-page);
+    --deal-card-bg: var(--c-bg-card);
+  }
+
+  /* 深色模式 — 跟随系统 */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --c-text-primary: #E0E0E0;
+      --c-text-secondary: #A0A0A0;
+      --c-text-muted: #6C6C6C;
+      --c-brand-red: #F04848;
+      --c-bg-page: #121212;
+      --c-bg-card: #222222;
+      --c-bg-card-active: #2A2A2A;
+      --c-divider: #6C6C6C;
+      --c-border-light: #2A2A2A;
+      --c-bg-product-tag: #353535;
+    }
+  }
+  /* 深色模式 — 手动开关（覆盖系统设置） */
+  [data-theme="dark"] {
+    --c-text-primary: #E0E0E0;
+    --c-text-secondary: #A0A0A0;
+    --c-text-muted: #6C6C6C;
+    --c-brand-red: #F04848;
+    --c-bg-page: #121212;
+    --c-bg-card: #222222;
+    --c-bg-card-active: #2A2A2A;
+    --c-divider: #6C6C6C;
+    --c-border-light: #2A2A2A;
+    --c-bg-product-tag: #353535;
+  }
+  /* 浅色模式手动开关 — 覆盖系统暗色设置 */
+  [data-theme="light"] {
+    --c-text-primary: #333333;
+    --c-text-secondary: #666666;
+    --c-text-muted: #999999;
+    --c-brand-red: #E62828;
+    --c-bg-page: #F5F5F5;
+    --c-bg-card: #FFFFFF;
+    --c-bg-card-active: #FAFAFA;
+    --c-divider: #D9D9D9;
+    --c-border-light: #EAEAEA;
+    --c-bg-product-tag: #F5F5F5;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
     width: 100%;
-    background: #F5F5F5;
+    background: var(--c-bg-page);
   }
 
   body {
@@ -62,7 +131,7 @@
     transition: background 0.15s ease;
     cursor: pointer;
   }
-  .deal-card:active { background: #FAFAFA; }
+  .deal-card:active { background: var(--c-bg-card-active); }
 
   .deal-card__image-wrap {
     flex: 0 0 115px;
@@ -94,7 +163,7 @@
   .deal-card__title {
     font-size: 14px;
     font-weight: 600;
-    color: #333333;
+    color: var(--c-text-primary);
     line-height: 1.66;
     height: calc(14px * 1.66 * 2);
     overflow: hidden;
@@ -122,9 +191,9 @@
   }
   /* 二级标签（灰色，默认） */
   .deal-tag {
-    --tag-color: #666666;
+    --tag-color: var(--c-text-secondary);
     --tag-border: rgba(102, 102, 102, 0.4);
-    --tag-bg: #fff;
+    --tag-bg: var(--c-bg-card);
     height: 15px;
     width: auto;
     box-sizing: border-box;
@@ -141,7 +210,7 @@
   }
   /* 一级标签 · 红色强调（默认 emphasis 色 · 配 flash.png 限量抢/限量秒杀类） */
   .deal-tag--emphasis {
-    --tag-color: #E62828;
+    --tag-color: var(--c-brand-red);
     --tag-border: rgba(230, 40, 40, 0.4);
   }
   /* 填充底变体：在任意色基础上加 10% 透明同色背景 */
@@ -185,8 +254,8 @@
     padding: 0 6px 0 1px;
     border: 0;
     border-radius: 3px;
-    background: #F5F5F5;
-    color: #666666;
+    background: var(--c-bg-product-tag);
+    color: var(--c-text-secondary);
     font-size: 11px;
     line-height: 14px;
     white-space: nowrap;
@@ -212,7 +281,7 @@
   /* 商品大标签内的价格 — 复用价格区结构，覆盖颜色与字号 */
   .deal-tag--product__price {
     flex: 0 0 auto;
-    color: #666666;
+    color: var(--c-text-secondary);
     font-weight: 400;
     display: inline-flex;
     align-items: baseline;
@@ -241,7 +310,7 @@
     margin-right: 0;
   }
   .deal-card__price-current {
-    color: #E62828;
+    color: var(--c-brand-red);
     font-weight: 700;
     display: inline-flex;
     align-items: baseline;
@@ -265,12 +334,12 @@
     line-height: 15px;
   }
   .deal-card__price-note {
-    color: #E62828;
+    color: var(--c-brand-red);
     font-size: 13px;
     line-height: 15px;
   }
   .deal-card__price-original {
-    color: #999999;
+    color: var(--c-text-muted);
     font-size: 13px;
     line-height: 15px;
     text-decoration: line-through;
@@ -283,16 +352,16 @@
   .deal-card--soldout .deal-card__price-current .integer,
   .deal-card--soldout .deal-card__price-current .decimal,
   .deal-card--soldout .deal-card__price-note {
-    color: #999999;
+    color: var(--c-text-muted);
   }
   /* 售罄前缀 */
   .deal-card__soldout-label {
-    color: #999999;
+    color: var(--c-text-muted);
     font-size: 15px;
     line-height: 1.2;
   }
   .deal-card__soldout-divider {
-    color: #D9D9D9;
+    color: var(--c-divider);
     font-size: 15px;
     line-height: 1.2;
   }
@@ -475,9 +544,31 @@
   .deal-card--vertical .deal-card__source-channel {
     flex: 0 1 auto;
   }
+  /* 主题切换按钮（仅 reference 页用，业务接入时不需要） */
+  .theme-toggle {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    z-index: 99;
+    background: var(--c-bg-card);
+    color: var(--c-text-primary);
+    border: 0.5px solid var(--c-divider);
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
 </style>
 </head>
 <body>
+
+<button class="theme-toggle" onclick="
+  var html = document.documentElement;
+  var cur = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  this.textContent = html.getAttribute('data-theme') === 'dark' ? '☀️ 浅色' : '🌙 深色';
+">🌙 深色</button>
 
 <a class="deal-card" href="#"
    aria-label="神价格，SK-II 神仙水 230ml 大瓶装，现价 1099 元，原价 1690 元，6.5 折，京东国际，10:42 上线，12.3k 评论，98% 推荐">
