@@ -296,6 +296,46 @@
   .deal-card__meta-value--zhi {
     width: 32px;
   }
+
+  /* ============ 原创卡片 .deal-card--article (article-card) ============ */
+  /* 与商品卡片同骨架，仅以下差异： */
+  /* 1) 隐藏价格行 */
+  .deal-card--article .deal-card__price-row { display: none; }
+  /* 2) footer 左侧用头像 + 用户名替换"商城|时间" */
+  .deal-card__author {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.2;
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+  .deal-card__author-avatar {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 18px;
+    margin-right: 6px;
+    display: block;
+  }
+  .deal-card__author-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  /* 用户认证/角标，紧跟用户名，与用户名间距 3px */
+  .deal-card__author-badge {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 12px;
+    margin-left: 3px;
+    display: block;
+  }
+  /* 3) thumb-up 替代值图标，宽度复用普通 meta-value (29px) */
+  .deal-card__meta-value--like {
+    width: 29px;
+  }
   .deal-card__meta-zhi {
     display: inline-flex;
     align-items: center;
@@ -542,6 +582,48 @@
           <span class="deal-card__meta-item" aria-label="96% 值得推荐">
             <img class="deal-card__meta-icon" src="./icons/zhi.svg" alt="" aria-hidden="true" />
             <span class="deal-card__meta-value deal-card__meta-value--zhi">96%</span>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</a>
+
+<!-- ⑤ 横版卡片 · 原创卡片 article-card -->
+<a class="deal-card deal-card--article" href="#"
+   aria-label="原创内容，开箱体验：佳明 fenix 8 智能运动手表 50 天深度评测，作者 山野徒步者，1.2k 赞"
+   style="margin-top: 5px;">
+  <div class="deal-card__image-wrap">
+    <img src="./image/article.png" alt="原创内容封面" />
+  </div>
+  <div class="deal-card__info">
+    <div>
+      <h3 class="deal-card__title">
+        开箱体验 · 佳明 fenix 8 智能运动手表 50 天深度评测，越野跑选它对吗
+      </h3>
+      <div class="deal-card__tags">
+        <span class="deal-tag">运动装备</span>
+        <span class="deal-tag">长测</span>
+      </div>
+    </div>
+    <div>
+      <!-- 价格行被 .deal-card--article 隐藏，可保留以兼容数据接口（不必删） -->
+      <div class="deal-card__price-row" aria-hidden="true"></div>
+
+      <div class="deal-card__footer">
+        <span class="deal-card__author">
+          <img class="deal-card__author-avatar" src="./image/user.png" alt="" aria-hidden="true" />
+          <span class="deal-card__author-name">山野徒步者</span>
+          <img class="deal-card__author-badge" src="./icons/yellow-v.png" alt="认证作者" />
+        </span>
+        <span class="deal-card__meta">
+          <span class="deal-card__meta-item" aria-label="356 条评论">
+            <img class="deal-card__meta-icon" src="./icons/comment.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value">356</span>
+          </span>
+          <span class="deal-card__meta-item" aria-label="1200 个赞">
+            <img class="deal-card__meta-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
+            <span class="deal-card__meta-value deal-card__meta-value--like">1.2k</span>
           </span>
         </span>
       </div>

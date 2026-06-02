@@ -22,7 +22,19 @@ App 信息流卡片设计系统 — Claude Code Skill。
 
 ## 版本历史
 
-### v1.3 (latest)
+### v2.0 (latest) — 信息流卡片设计系统
+- **架构升级**：从单一卡片组件 → 多卡片设计系统，新增「卡片类型」分类
+- Skill name: `good-deal-card` → `feed-cards`（**breaking change**：老名字不再触发）
+- GitHub repo: `product-skill` → `feed-cards`
+- 现有卡片归类为 **商品卡片 product-card**（CSS 类名 `.deal-card` 保留兼容）
+- 新增 **原创卡片 article-card**（`.deal-card.deal-card--article`）：
+  - 复用商品卡片骨架，价格行 `display: none` 隐藏
+  - 标签仅二级灰（原创内容用中性分类）
+  - Footer 左侧：18px 圆头像 + 用户名 + 12px 认证角标
+  - Footer 右侧：thumb-up 图标替代值图标，显示点赞数
+  - 资源：`icons/thumb-up.svg`、`icons/yellow-v.png`、`image/user.png`、`image/article.png`
+
+### v1.3
 - 新增**售罄状态** `.deal-card--soldout`：价格行加 `售罄 |` 前缀，整行变灰 `#999999`
 - 标签形态收敛为 **2 种**：纯描边 / 描边+填充+图标（去掉中间形态 B）
 - 标签行与价格行**单行溢出处理**：`flex-wrap: nowrap; overflow: hidden`
@@ -56,15 +68,19 @@ App 信息流卡片设计系统 — Claude Code Skill。
 ```
 .
 ├── SKILL.md              # Claude Code Skill 规范文档
-├── reference.html        # 标准实现示例（含 3 张横版 + 2 张瀑布流）
+├── reference.html        # 标准实现示例
 ├── image/
 │   ├── badge.png         # 徽标图（如"绝对值"）
-│   └── shoe.png          # 商品图占位
+│   ├── shoe.png          # 商品图占位
+│   ├── article.png       # 原创卡片封面占位 (v2.0)
+│   └── user.png          # 用户头像占位 (v2.0)
 ├── fonts/
 │   └── price.ttf         # 价格特殊字体
 └── icons/
     ├── comment.svg       # 评论图标
-    ├── zhi.svg           # "值"图标
+    ├── zhi.svg           # "值"图标（商品卡推荐率）
+    ├── thumb-up.svg      # 点赞图标 (v2.0 原创卡)
+    ├── yellow-v.png      # 黄 V 认证角标 (v2.0)
     ├── flash.png         # 闪电（限量抢/秒杀，配红色标签）
     ├── coupon.png        # 优惠券（国家补贴/领券，配绿色标签）
     ├── new.png           # 新品（新品上市，配深蓝色标签）
