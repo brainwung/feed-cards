@@ -495,7 +495,7 @@
   /* 瀑布流容器：JS 重排实现逐行填充 + 紧密堆叠 */
   .deal-grid {
     position: relative;
-    margin-top: 12px;
+    margin-top: 5px;
   }
   .deal-grid > .deal-card {
     position: absolute;
@@ -559,6 +559,45 @@
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
+
+  /* Tabs 顶部导航 */
+  .tabs {
+    display: flex;
+    background: var(--c-bg-card);
+    margin: -5px -5px 5px -5px;       /* 抵消 body padding 5px，让 tabs 顶到屏幕边 */
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .tabs__item {
+    flex: 1;
+    height: 42px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--c-text-primary);
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tabs__item--active {
+    color: var(--c-brand-red);
+  }
+  .tabs__item--active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 4px;
+    background: var(--c-brand-red);
+  }
+  .tab-panel { display: none; }
+  .tab-panel--active { display: block; }
 </style>
 </head>
 <body>
@@ -569,6 +608,13 @@
   html.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
   this.textContent = html.getAttribute('data-theme') === 'dark' ? '☀️ 浅色' : '🌙 深色';
 ">🌙 深色</button>
+
+<div class="tabs">
+  <button class="tabs__item tabs__item--active" data-target="panel-h">横向卡片</button>
+  <button class="tabs__item" data-target="panel-v">竖向卡片</button>
+</div>
+
+<div class="tab-panel tab-panel--active" id="panel-h">
 
 <a class="deal-card" href="#"
    aria-label="神价格，SK-II 神仙水 230ml 大瓶装，现价 1099 元，原价 1690 元，6.5 折，京东国际，10:42 上线，12.3k 评论，98% 推荐">
@@ -757,6 +803,10 @@
 </a>
 
 <!-- ============ 上图下文 · 两列瀑布流 ============ -->
+</div><!-- /panel-h -->
+
+<div class="tab-panel" id="panel-v">
+
 <div class="deal-grid">
 
   <a class="deal-card deal-card--vertical" href="#"
@@ -903,7 +953,9 @@
     </div>
   </a>
 
-</div>
+</div><!-- /.deal-grid -->
+
+</div><!-- /panel-v -->
 
 </body>
 <script>
@@ -970,6 +1022,21 @@
   window.addEventListener('resize', function() {
     clearTimeout(window.__fitTimer);
     window.__fitTimer = setTimeout(runAll, 100);
+  });
+
+  /* Tabs 切换 */
+  document.querySelectorAll('.tabs__item').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var target = btn.getAttribute('data-target');
+      document.querySelectorAll('.tabs__item').forEach(function(b) {
+        b.classList.toggle('tabs__item--active', b === btn);
+      });
+      document.querySelectorAll('.tab-panel').forEach(function(p) {
+        p.classList.toggle('tab-panel--active', p.id === target);
+      });
+      // 切到竖向 tab 时重新计算瀑布流（display:none 时 clientWidth=0）
+      runAll();
+    });
   });
 </script>
 </html>
