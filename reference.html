@@ -423,12 +423,15 @@
   }
 
   /* ============ 上图下文变体 .deal-card--vertical ============ */
+  /* 瀑布流容器：JS 重排实现逐行填充 + 紧密堆叠 */
   .deal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
-    align-items: start;
+    position: relative;
     margin-top: 12px;
+  }
+  .deal-grid > .deal-card {
+    position: absolute;
+    width: calc((100% - 5px) / 2);  /* 两列等宽，列间距 5px */
+    box-sizing: border-box;
   }
   .deal-card--vertical {
     display: flex;
@@ -831,15 +834,51 @@
     document.querySelectorAll('.deal-card__tags, .deal-card__price-row').forEach(fitOneLine);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', fitAll);
-  } else {
-    fitAll();
+  /**
+   * 瀑布流重排：HTML 顺序即重要性，逐行填充（卡 1 → 左、卡 2 → 右、卡 3 → 谁矮谁接）。
+   * gap 5px，列宽 (容器宽 - 5) / 2。
+   */
+  function layoutWaterfall(grid) {
+    var cards = Array.from(grid.children);
+    if (!cards.length) return;
+    var GAP = 5;
+    var gridWidth = grid.clientWidth;
+    var colWidth = (gridWidth - GAP) / 2;
+    var colHeights = [0, 0];
+
+    cards.forEach(function(card, i) {
+      var col;
+      if (i === 0) col = 0;          // 第 1 张固定左列（保证逐行视觉）
+      else if (i === 1) col = 1;     // 第 2 张固定右列
+      else col = colHeights[0] <= colHeights[1] ? 0 : 1;  // 之后选短列
+
+      card.style.left = col === 0 ? '0' : (colWidth + GAP) + 'px';
+      card.style.top = colHeights[col] + 'px';
+
+      colHeights[col] += card.offsetHeight + GAP;
+    });
+
+    grid.style.height = Math.max(colHeights[0], colHeights[1]) - GAP + 'px';
   }
-  window.addEventListener('load', fitAll);
+
+  function layoutAllWaterfalls() {
+    document.querySelectorAll('.deal-grid').forEach(layoutWaterfall);
+  }
+
+  function runAll() {
+    fitAll();
+    layoutAllWaterfalls();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runAll);
+  } else {
+    runAll();
+  }
+  window.addEventListener('load', runAll);
   window.addEventListener('resize', function() {
     clearTimeout(window.__fitTimer);
-    window.__fitTimer = setTimeout(fitAll, 100);
+    window.__fitTimer = setTimeout(runAll, 100);
   });
 </script>
 </html>
