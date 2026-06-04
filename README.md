@@ -22,7 +22,16 @@ App 信息流基础卡片设计系统
 
 ## 版本历史
 
-### v2.1 (latest)
+### v2.2 (latest)
+- **深色模式支持**：`@media (prefers-color-scheme: dark)` 自动跟随系统 + `[data-theme="dark/light"]` 手动覆盖
+- **颜色系统重构为 CSS 变量**：10 个语义化 token（`--c-text-primary` 等），24 处硬编码 hex 全部替换；保留 `--deal-*` 历史变量作为别名兼容
+- **瀑布流改为 JS 重排**：替代 v2.1 的 CSS Grid 方案，实现真正的紧密堆叠 + 重要性逐行视觉。无空白
+- **话题入口** `.deal-card__topic`：竖版卡片标题上方的分类入口，13px topic-star 图标 + 11px `#999` 文字
+- **互斥规则**：话题入口与商品大标签不可同时存在，话题入口优先（CSS `:has()` 自动隐藏商品大标签）
+- **顶部 Tabs**（仅 reference 页）：横版/竖版分类切换，业务接入时删除即可
+- **主题切换按钮**（仅 reference 页）：右上角浮动，点击切换深浅色实时预览
+
+### v2.1
 - **商品大标签** `.deal-tag--product`：原创卡片专用标签，承载关联商品
 - **竖版原创卡片**：`.deal-card.deal-card--vertical.deal-card--article` 三类叠加，瀑布流场景的原创卡
 - **商品大标签置顶变体** `.deal-card__tags--top`：在竖版原创卡中将商品大标签置于标题上方
@@ -90,6 +99,7 @@ App 信息流基础卡片设计系统
     ├── comment.svg       # 评论图标
     ├── zhi.svg           # "值"图标（商品卡推荐率）
     ├── thumb-up.svg      # 点赞图标 (v2.0 原创卡)
+    ├── topic-star.svg    # 话题入口图标 (v2.2)
     ├── yellow-v.png      # 黄 V 认证角标 (v2.0)
     ├── flash.png         # 闪电（限量抢/秒杀，配红色标签）
     ├── coupon.png        # 优惠券（国家补贴/领券，配绿色标签）

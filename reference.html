@@ -537,6 +537,33 @@
     height: auto;
     max-height: calc(20px * 2);
   }
+  /* 话题入口 — 仅竖版商品卡使用，置于标题上方 */
+  .deal-card__topic {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 9px;         /* 距下方标题 9px */
+    color: var(--c-text-muted);
+    font-size: 11px;
+    line-height: 13px;
+  }
+  /* 作为信息区首个元素时（标题上方），距图片由 info 自身的 padding-top 提供 9px */
+  .deal-card--vertical .deal-card__info > .deal-card__topic:first-child {
+    margin-top: 0;
+  }
+  /* 互斥规则：话题入口与商品大标签不可同时出现，话题入口优先级更高 */
+  .deal-card--vertical .deal-card__info:has(> .deal-card__topic) > .deal-card__tags--top {
+    display: none;
+  }
+  .deal-card__topic-icon {
+    width: 13px;
+    height: 13px;
+    margin-right: 1px;
+    flex: 0 0 13px;
+    display: block;
+  }
+  .deal-card__topic + .deal-card__title {
+    margin-top: 0;              /* 兴趣标签自带 9px margin-bottom，标题不再叠加 */
+  }
   /* footer 简化版：左侧只显示商城 */
   .deal-card--vertical .deal-card__footer {
     margin-right: 0;
@@ -815,6 +842,10 @@
       <img src="./image/shoe.png" alt="米家加湿器" />
     </div>
     <div class="deal-card__info">
+      <span class="deal-card__topic">
+        <img class="deal-card__topic-icon" src="./icons/topic-star.svg" alt="" aria-hidden="true" />
+        家居好物
+      </span>
       <h3 class="deal-card__title">
         <img class="deal-card__badge" src="./image/badge.png" alt="绝对值" />MIJIA 米家 MJJSQ04 智能加湿器 4L
       </h3>
@@ -890,6 +921,10 @@
       <img src="./image/article.png" alt="原创内容封面" />
     </div>
     <div class="deal-card__info">
+      <span class="deal-card__topic">
+        <img class="deal-card__topic-icon" src="./icons/topic-star.svg" alt="" aria-hidden="true" />
+        旅行手记
+      </span>
       <h3 class="deal-card__title">京都赏枫 6 日散步路线 · 避开人潮的冷门寺院清单</h3>
       <div class="deal-card__tags">
         <span class="deal-tag deal-tag--emphasis">编辑推荐</span>
