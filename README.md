@@ -7,6 +7,7 @@ App 信息流基础卡片设计系统
 **当前包含的卡片类型**：
 - ① **商品卡片 product-card** 
 - ② **原创卡片 article-card** 
+- ③ **视频卡片**（article-card 的 .deal-card--video 变体）
 
 ## 快速预览
 
@@ -22,7 +23,15 @@ App 信息流基础卡片设计系统
 
 ## 版本历史
 
-### v2.2 (latest)
+### v2.3 (latest)
+- **视频变体** `.deal-card--video`：在 article-card 上叠加修饰类，封面叠加播放按钮
+- 横版：图片正中央 45px 圆 + 21px 图标
+- 竖版：右上角 18px 圆 + 10px 图标，距上/距右各 9px
+- 黑底 40% 透明 + 4px 玻璃模糊（`backdrop-filter: blur`）
+- 资源：`icons/play-fill.svg`
+- 与所有现有变体兼容：常规标签 / 商品大标签 / 话题入口 / 图片比例
+
+### v2.2
 - **深色模式支持**：
 - **瀑布流改为 JS 重排**：替代 v2.1 的 CSS Grid 方案，实现真正的紧密堆叠 + 重要性逐行视觉。无空白
 - **话题入口** `.deal-card__topic`：竖版卡片标题上方的分类入口，13px topic-star 图标 + 11px `#999` 文字
@@ -96,6 +105,7 @@ App 信息流基础卡片设计系统
     ├── zhi.svg           # "值"图标（商品卡推荐率）
     ├── thumb-up.svg      # 点赞图标 (v2.0 原创卡)
     ├── topic-star.svg    # 话题入口图标 (v2.2)
+    ├── play-fill.svg     # 视频播放图标 (v2.3)
     ├── yellow-v.png      # 黄 V 认证角标 (v2.0)
     ├── flash.png         # 闪电（限量抢/秒杀，配红色标签）
     ├── coupon.png        # 优惠券（国家补贴/领券，配绿色标签）

@@ -554,6 +554,49 @@
   .deal-card--vertical .deal-card__info:has(> .deal-card__topic) > .deal-card__tags--top {
     display: none;
   }
+
+  /* ============ 视频卡片变体 .deal-card--video ============ */
+  /* 在 article-card 上叠加 .deal-card--video 即可，HTML 仅多一个播放图标 */
+  .deal-card--video .deal-card__image-wrap {
+    position: relative;
+  }
+  .deal-card__play {
+    position: absolute;
+    pointer-events: none;     /* 不拦截点击 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  /* 竖版：右上角 18px 圆，距上/距右 9px */
+  .deal-card--vertical.deal-card--video .deal-card__play {
+    top: 9px;
+    right: 9px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+  }
+  .deal-card--vertical.deal-card--video .deal-card__play img {
+    width: 10px;
+    height: 10px;
+    display: block;
+  }
+  /* 横版：居中于图片，45px 圆 + 21px 图标 */
+  .deal-card:not(.deal-card--vertical).deal-card--video .deal-card__play {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+  .deal-card:not(.deal-card--vertical).deal-card--video .deal-card__play img {
+    width: 21px;
+    height: 21px;
+    display: block;
+  }
   .deal-card__topic-icon {
     width: 13px;
     height: 13px;
@@ -788,12 +831,13 @@
   </div>
 </a>
 
-<!-- ④ 横版卡片 · 常规原创卡片（普通二级灰标签） -->
-<a class="deal-card deal-card--article" href="#"
-   aria-label="原创内容，三亚后海冲浪 7 天保姆级攻略，作者 暖暖夏夏，2.5k 赞"
+<!-- ④ 横版卡片 · 视频变体（在原创卡片基础上叠加 .deal-card--video） -->
+<a class="deal-card deal-card--article deal-card--video" href="#"
+   aria-label="原创视频，三亚后海冲浪 7 天保姆级攻略，作者 暖暖夏夏，2.5k 赞"
    style="margin-top: 5px;">
   <div class="deal-card__image-wrap">
-    <img src="./image/article.png" alt="原创内容封面" />
+    <img src="./image/article.png" alt="原创视频封面" />
+    <span class="deal-card__play"><img src="./icons/play-fill.svg" alt="" aria-hidden="true" /></span>
   </div>
   <div class="deal-card__info">
     <div>
@@ -914,11 +958,12 @@
     </div>
   </a>
 
-  <!-- 竖版原创卡片 ① · 常规标签 + 3:4 图片 -->
-  <a class="deal-card deal-card--vertical deal-card--article" href="#"
-     aria-label="原创内容，京都赏枫 6 日散步路线，作者 阿野旅行家，1.8k 赞">
+  <!-- 竖版原创卡片 ① · 视频变体（带话题入口）+ 3:4 图片 -->
+  <a class="deal-card deal-card--vertical deal-card--article deal-card--video" href="#"
+     aria-label="原创视频，京都赏枫 6 日散步路线，作者 阿野旅行家，1.8k 赞">
     <div class="deal-card__image-wrap deal-card__image-wrap--3-4">
-      <img src="./image/article.png" alt="原创内容封面" />
+      <img src="./image/article.png" alt="原创视频封面" />
+      <span class="deal-card__play"><img src="./icons/play-fill.svg" alt="" aria-hidden="true" /></span>
     </div>
     <div class="deal-card__info">
       <span class="deal-card__topic">
