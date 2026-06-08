@@ -32,7 +32,7 @@
     --c-bg-product-tag: #F5F5F5;   /* 商品大标签底色（与页面背景区分，深色下高于页面背景） */
 
     /* 标签变体填充透明度（不变） */
-    --tag-red-bg: rgba(230, 40, 40, 0.1);
+    --tag-red-bg: rgba(230, 40, 40, 0.05);
     --tag-red-border: rgba(230, 40, 40, 0.4);
     --tag-grey-border: rgba(102, 102, 102, 0.4);
     --tag-green: #10B354;
@@ -121,7 +121,7 @@
   .deal-card {
     display: flex;
     align-items: stretch;
-    gap: 9px;
+    gap: 6px;
     height: 139px;
     background: var(--deal-card-bg);
     border-radius: 6px;
@@ -213,9 +213,9 @@
     --tag-color: var(--c-brand-red);
     --tag-border: rgba(230, 40, 40, 0.4);
   }
-  /* 填充底变体：在任意色基础上加 10% 透明同色背景 */
+  /* 填充底变体：默认红色强调为 5% 透明同色背景 */
   .deal-tag--filled {
-    --tag-bg: rgba(230, 40, 40, 0.1);
+    --tag-bg: rgba(230, 40, 40, 0.05);
   }
   /* 绿 · 配 coupon.png 国家补贴/领券立减类 */
   .deal-tag--green {
@@ -478,19 +478,6 @@
   .deal-card--vertical.deal-card--article .deal-card__tags:not(.deal-card__tags--top) {
     margin-top: 9px;
   }
-  .deal-card__meta-zhi {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 14px;
-    height: 14px;
-    border: 1px solid currentColor;
-    border-radius: 2px;
-    font-size: 9px;
-    font-weight: 600;
-    line-height: 1;
-  }
-
   /* ============ 上图下文变体 .deal-card--vertical ============ */
   /* 瀑布流容器：JS 重排实现逐行填充 + 紧密堆叠 */
   .deal-grid {
@@ -597,6 +584,217 @@
     height: 21px;
     display: block;
   }
+
+  /* ============ 社区频道卡片 .deal-card--community ============ */
+  /* 单一社区频道专用：内容消费优先，不参与首页商品卡 139px 混排 */
+  .deal-card--community {
+    display: block;
+    height: auto;
+    padding: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .deal-card__community-head {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    margin-bottom: 9px;
+  }
+  .deal-card__community-avatar {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 6px;
+    display: block;
+  }
+  .deal-card__community-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--c-text-primary);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .deal-card__community-badge {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    margin-left: 5px;
+    display: block;
+  }
+  .deal-card__community-label {
+    flex: 0 0 auto;
+    margin-left: 9px;
+    color: var(--c-text-muted);
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .deal-card__community-title {
+    margin: 0 0 5px;
+    color: var(--c-text-primary);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+  .deal-card__community-summary {
+    margin: 0 0 9px;
+    color: var(--c-text-primary);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .deal-card__community-more {
+    color: var(--c-text-primary);
+    font-weight: 700;
+  }
+  .deal-card__community-media {
+    width: 100%;
+    aspect-ratio: 341 / 146;
+    margin-bottom: 12px;
+    border-radius: 3px;
+    background: var(--c-bg-page);
+    overflow: hidden;
+  }
+  .deal-card__community-media > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    object-fit: cover;
+    display: block;
+  }
+  .deal-card__community-media--square-grid {
+    display: grid;
+    /* 固定 3 列：少于 3 图时不补占位，右侧列自然留空 */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    aspect-ratio: auto;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  .deal-card__community-square-image {
+    display: block;
+    aspect-ratio: 1 / 1;
+    border-radius: 3px;
+    background: var(--c-bg-page);
+    overflow: hidden;
+  }
+  .deal-card__community-square-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    object-fit: cover;
+    display: block;
+  }
+  .deal-card--community-video .deal-card__community-media {
+    position: relative;
+    aspect-ratio: 341 / 191;
+  }
+  .deal-card--community-video .deal-card__play {
+    top: 9px;
+    left: 9px;
+    width: auto;
+    height: 22px;
+    padding: 0 7px;
+    border-radius: 11px;
+    gap: 5px;
+    color: #FFFFFF;
+  }
+  .deal-card--community-video .deal-card__play img {
+    width: 12px;
+    height: 12px;
+    border-radius: 0;
+    object-fit: contain;
+    display: block;
+  }
+  .deal-card__play-duration {
+    color: #FFFFFF;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .deal-card__community-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .deal-card__community-topics {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .deal-tag--community-topic {
+    height: 24px;
+    padding: 0 9px 0 5px;
+    margin-right: 6px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--c-bg-product-tag);
+    color: var(--c-text-primary);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .deal-tag--community-topic:last-child {
+    margin-right: 0;
+  }
+  .deal-card__community-topic-icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    margin: 0 6px 0 0;
+  }
+  .deal-card__community-meta {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 9px;
+    color: var(--c-text-primary);
+  }
+  .deal-card__community-meta .deal-card__meta-item {
+    gap: 5px;
+  }
+  .deal-card__community-action-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+  }
+  .deal-card--community .deal-card__community-topic-icon,
+  .deal-card--community .deal-card__community-action-icon {
+    filter: brightness(0) saturate(100%) invert(18%);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .deal-card--community .deal-card__community-topic-icon,
+    :root:not([data-theme="light"]) .deal-card--community .deal-card__community-action-icon {
+      filter: brightness(0) saturate(100%) invert(88%);
+    }
+  }
+  [data-theme="dark"] .deal-card--community .deal-card__community-topic-icon,
+  [data-theme="dark"] .deal-card--community .deal-card__community-action-icon {
+    filter: brightness(0) saturate(100%) invert(88%);
+  }
+  [data-theme="light"] .deal-card--community .deal-card__community-topic-icon,
+  [data-theme="light"] .deal-card--community .deal-card__community-action-icon {
+    filter: brightness(0) saturate(100%) invert(18%);
+  }
+  .deal-card__community-meta-value {
+    width: auto;
+    font-size: 13px;
+    line-height: 1.2;
+  }
   .deal-card__topic-icon {
     width: 13px;
     height: 13px;
@@ -617,17 +815,36 @@
   /* 主题切换按钮（仅 reference 页用，业务接入时不需要） */
   .theme-toggle {
     position: fixed;
-    top: 8px;
-    right: 8px;
+    right: 12px;
+    bottom: 12px;
     z-index: 99;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: var(--c-bg-card);
     color: var(--c-text-primary);
     border: 0.5px solid var(--c-divider);
-    border-radius: 16px;
-    padding: 4px 12px;
-    font-size: 12px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 0;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  .theme-toggle__icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+  .theme-toggle__icon--sun {
+    display: none;
+  }
+  [data-theme="dark"] .theme-toggle__icon--moon {
+    display: none;
+  }
+  [data-theme="dark"] .theme-toggle__icon--sun {
+    display: block;
   }
 
   /* Tabs 顶部导航 */
@@ -672,16 +889,25 @@
 </head>
 <body>
 
-<button class="theme-toggle" onclick="
+<button class="theme-toggle" aria-label="切换深色模式" onclick="
   var html = document.documentElement;
   var cur = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
-  this.textContent = html.getAttribute('data-theme') === 'dark' ? '☀️ 浅色' : '🌙 深色';
-">🌙 深色</button>
+  var next = cur === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  this.setAttribute('aria-label', next === 'dark' ? '切换浅色模式' : '切换深色模式');
+">
+  <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 20 20" aria-hidden="true">
+    <path fill="currentColor" d="M16.48 12.77C15.44 15.19 13.03 16.88 10.24 16.88C6.49 16.88 3.45 13.84 3.45 10.09C3.45 7.28 5.17 4.86 7.6 3.83C7.97 3.67 8.34 4.06 8.16 4.42C7.74 5.25 7.5 6.18 7.5 7.17C7.5 10.5 10.2 13.2 13.53 13.2C14.41 13.2 15.25 13.01 16 12.67C16.37 12.5 16.64 12.39 16.48 12.77Z" />
+  </svg>
+  <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 20 20" aria-hidden="true">
+    <path fill="currentColor" d="M10 5.6C12.43 5.6 14.4 7.57 14.4 10C14.4 12.43 12.43 14.4 10 14.4C7.57 14.4 5.6 12.43 5.6 10C5.6 7.57 7.57 5.6 10 5.6ZM10 1.8C10.46 1.8 10.83 2.17 10.83 2.63V3.6C10.83 4.06 10.46 4.43 10 4.43C9.54 4.43 9.17 4.06 9.17 3.6V2.63C9.17 2.17 9.54 1.8 10 1.8ZM10 15.57C10.46 15.57 10.83 15.94 10.83 16.4V17.37C10.83 17.83 10.46 18.2 10 18.2C9.54 18.2 9.17 17.83 9.17 17.37V16.4C9.17 15.94 9.54 15.57 10 15.57ZM17.37 9.17C17.83 9.17 18.2 9.54 18.2 10C18.2 10.46 17.83 10.83 17.37 10.83H16.4C15.94 10.83 15.57 10.46 15.57 10C15.57 9.54 15.94 9.17 16.4 9.17H17.37ZM3.6 9.17C4.06 9.17 4.43 9.54 4.43 10C4.43 10.46 4.06 10.83 3.6 10.83H2.63C2.17 10.83 1.8 10.46 1.8 10C1.8 9.54 2.17 9.17 2.63 9.17H3.6ZM15.8 3.02C16.12 3.35 16.12 3.87 15.8 4.2L15.11 4.89C14.78 5.21 14.26 5.21 13.93 4.89C13.61 4.56 13.61 4.04 13.93 3.71L14.62 3.02C14.95 2.7 15.47 2.7 15.8 3.02ZM6.07 15.11C6.39 15.44 6.39 15.96 6.07 16.29L5.38 16.98C5.05 17.3 4.53 17.3 4.2 16.98C3.88 16.65 3.88 16.13 4.2 15.8L4.89 15.11C5.22 14.79 5.74 14.79 6.07 15.11ZM16.98 15.8C17.3 16.13 17.3 16.65 16.98 16.98C16.65 17.3 16.13 17.3 15.8 16.98L15.11 16.29C14.79 15.96 14.79 15.44 15.11 15.11C15.44 14.79 15.96 14.79 16.29 15.11L16.98 15.8ZM4.89 3.71C5.21 4.04 5.21 4.56 4.89 4.89C4.56 5.21 4.04 5.21 3.71 4.89L3.02 4.2C2.7 3.87 2.7 3.35 3.02 3.02C3.35 2.7 3.87 2.7 4.2 3.02L4.89 3.71Z" />
+  </svg>
+</button>
 
 <div class="tabs">
   <button class="tabs__item tabs__item--active" data-target="panel-h">横版卡片</button>
   <button class="tabs__item" data-target="panel-v">竖版卡片</button>
+  <button class="tabs__item" data-target="panel-c">社区卡片</button>
 </div>
 
 <div class="tab-panel tab-panel--active" id="panel-h">
@@ -836,7 +1062,7 @@
    aria-label="原创视频，三亚后海冲浪 7 天保姆级攻略，作者 暖暖夏夏，2.5k 赞"
    style="margin-top: 5px;">
   <div class="deal-card__image-wrap">
-    <img src="./image/article.png" alt="原创视频封面" />
+    <img src="./image/video.jpg" alt="原创视频封面" />
     <span class="deal-card__play"><img src="./icons/play-fill.svg" alt="" aria-hidden="true" /></span>
   </div>
   <div class="deal-card__info">
@@ -875,6 +1101,159 @@
 
 <!-- ============ 上图下文 · 两列瀑布流 ============ -->
 </div><!-- /panel-h -->
+
+<div class="tab-panel" id="panel-c">
+
+<!-- ⑤ 社区卡片 · 大图模式 -->
+<a class="deal-card deal-card--community deal-card--community-large" href="#"
+   aria-label="原创社区内容，露颂德国进口雷司令半甜白葡萄酒，作者 弥豆子米袋子，8800 条评论，8800 个赞">
+  <div class="deal-card__community-head">
+    <img class="deal-card__community-avatar" src="./image/user.png" alt="" aria-hidden="true" />
+    <span class="deal-card__community-name">弥豆子米袋子</span>
+    <img class="deal-card__community-badge" src="./icons/yellow-v.png" alt="认证作者" />
+    <span class="deal-card__community-label">原创</span>
+  </div>
+
+  <h3 class="deal-card__community-title">
+    露颂德国进口雷司令半甜白葡萄酒：原酒进口，微醺果香新体验
+  </h3>
+
+  <p class="deal-card__community-summary">
+    这局活动的目的十分明确，原本为 1974 年“大皇帝”张罗的 50 周年庆祝不小心延后了半年，便顺势搭配了一众来宾。
+    <span class="deal-card__community-more">全部</span>
+  </p>
+
+  <div class="deal-card__community-media">
+    <img src="./image/article.png" alt="葡萄酒活动配图" />
+  </div>
+
+  <div class="deal-card__community-bottom">
+    <div class="deal-card__community-topics">
+      <span class="deal-tag deal-tag--community-topic">
+        <img class="deal-card__community-topic-icon" src="./icons/topic-circle-fill.svg" alt="" aria-hidden="true" />葡萄酒
+      </span>
+      <span class="deal-tag deal-tag--community-topic">
+        <img class="deal-card__community-topic-icon" src="./icons/topic-circle-fill.svg" alt="" aria-hidden="true" />布拉格
+      </span>
+    </div>
+    <span class="deal-card__community-meta">
+      <span class="deal-card__meta-item" aria-label="8800 条评论">
+        <img class="deal-card__community-action-icon" src="./icons/comment-r.svg" alt="" aria-hidden="true" />
+        <span class="deal-card__community-meta-value">8.8k</span>
+      </span>
+      <span class="deal-card__meta-item" aria-label="8800 个赞">
+        <img class="deal-card__community-action-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
+        <span class="deal-card__community-meta-value">8.8k</span>
+      </span>
+    </span>
+  </div>
+</a>
+
+<!-- ⑥ 社区卡片 · 视频模式（左上角播放角标，图片比例 341:191） -->
+<a class="deal-card deal-card--community deal-card--community-video" href="#"
+   aria-label="原创社区视频，雷司令甜白怎么选，作者 弥豆子米袋子，5600 条评论，7900 个赞"
+   style="margin-top: 5px;">
+  <div class="deal-card__community-head">
+    <img class="deal-card__community-avatar" src="./image/user.png" alt="" aria-hidden="true" />
+    <span class="deal-card__community-name">弥豆子米袋子</span>
+    <img class="deal-card__community-badge" src="./icons/yellow-v.png" alt="认证作者" />
+    <span class="deal-card__community-label">原创</span>
+  </div>
+
+  <h3 class="deal-card__community-title">
+    雷司令甜白怎么选：3 分钟看懂酸度、甜度和餐搭场景
+  </h3>
+
+  <p class="deal-card__community-summary">
+    从入门款到进阶款，各选一瓶做快速对比，适合刚开始喝甜白的朋友先建立口味坐标。
+    <span class="deal-card__community-more">全部</span>
+  </p>
+
+  <div class="deal-card__community-media">
+    <img src="./image/video.jpg" alt="雷司令甜白视频封面" />
+    <span class="deal-card__play">
+      <img src="./icons/play-fill.svg" alt="" aria-hidden="true" />
+      <span class="deal-card__play-duration">03:28</span>
+    </span>
+  </div>
+
+  <div class="deal-card__community-bottom">
+    <div class="deal-card__community-topics">
+      <span class="deal-tag deal-tag--community-topic">
+        <img class="deal-card__community-topic-icon" src="./icons/topic-circle-fill.svg" alt="" aria-hidden="true" />葡萄酒
+      </span>
+      <span class="deal-tag deal-tag--community-topic">
+        <img class="deal-card__community-topic-icon" src="./icons/topic-circle-fill.svg" alt="" aria-hidden="true" />雷司令
+      </span>
+    </div>
+    <span class="deal-card__community-meta">
+      <span class="deal-card__meta-item" aria-label="5600 条评论">
+        <img class="deal-card__community-action-icon" src="./icons/comment-r.svg" alt="" aria-hidden="true" />
+        <span class="deal-card__community-meta-value">5.6k</span>
+      </span>
+      <span class="deal-card__meta-item" aria-label="7900 个赞">
+        <img class="deal-card__community-action-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
+        <span class="deal-card__community-meta-value">7.9k</span>
+      </span>
+    </span>
+  </div>
+</a>
+
+<!-- ⑦ 社区卡片 · 方图模式（三张 1:1 小图，间距 6px） -->
+<a class="deal-card deal-card--community deal-card--community-square" href="#"
+   aria-label="原创社区内容，周末酒局三款甜白对比，作者 弥豆子米袋子，3200 条评论，4200 个赞"
+   style="margin-top: 5px;">
+  <div class="deal-card__community-head">
+    <img class="deal-card__community-avatar" src="./image/user.png" alt="" aria-hidden="true" />
+    <span class="deal-card__community-name">弥豆子米袋子</span>
+    <img class="deal-card__community-badge" src="./icons/yellow-v.png" alt="认证作者" />
+    <span class="deal-card__community-label">原创</span>
+  </div>
+
+  <h3 class="deal-card__community-title">
+    周末酒局三款甜白对比：从花香、酸度到餐搭，一次喝明白
+  </h3>
+
+  <p class="deal-card__community-summary">
+    这次挑了三瓶价位相近的甜白做横向对比，入口香气差别比想象中更明显，搭配海鲜和轻食都挺合适。
+    <span class="deal-card__community-more">全部</span>
+  </p>
+
+  <div class="deal-card__community-media deal-card__community-media--square-grid">
+    <span class="deal-card__community-square-image">
+      <img src="./image/article.png" alt="甜白酒款一" />
+    </span>
+    <span class="deal-card__community-square-image">
+      <img src="./image/shoe.png" alt="甜白酒款二" />
+    </span>
+    <span class="deal-card__community-square-image">
+      <img src="./image/article.png" alt="甜白酒款三" />
+    </span>
+  </div>
+
+  <div class="deal-card__community-bottom">
+    <div class="deal-card__community-topics">
+      <span class="deal-tag deal-tag--community-topic">
+        <img class="deal-card__community-topic-icon" src="./icons/topic-circle-fill.svg" alt="" aria-hidden="true" />葡萄酒
+      </span>
+      <span class="deal-tag deal-tag--community-topic">
+        <img class="deal-card__community-topic-icon" src="./icons/topic-circle-fill.svg" alt="" aria-hidden="true" />甜白
+      </span>
+    </div>
+    <span class="deal-card__community-meta">
+      <span class="deal-card__meta-item" aria-label="3200 条评论">
+        <img class="deal-card__community-action-icon" src="./icons/comment-r.svg" alt="" aria-hidden="true" />
+        <span class="deal-card__community-meta-value">3.2k</span>
+      </span>
+      <span class="deal-card__meta-item" aria-label="4200 个赞">
+        <img class="deal-card__community-action-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
+        <span class="deal-card__community-meta-value">4.2k</span>
+      </span>
+    </span>
+  </div>
+</a>
+
+</div><!-- /panel-c -->
 
 <div class="tab-panel" id="panel-v">
 
@@ -962,7 +1341,7 @@
   <a class="deal-card deal-card--vertical deal-card--article deal-card--video" href="#"
      aria-label="原创视频，京都赏枫 6 日散步路线，作者 阿野旅行家，1.8k 赞">
     <div class="deal-card__image-wrap deal-card__image-wrap--3-4">
-      <img src="./image/article.png" alt="原创视频封面" />
+      <img src="./image/video.jpg" alt="原创视频封面" />
       <span class="deal-card__play"><img src="./icons/play-fill.svg" alt="" aria-hidden="true" /></span>
     </div>
     <div class="deal-card__info">
@@ -1093,6 +1472,39 @@
     layoutAllWaterfalls();
   }
 
+  var ACTIVE_TAB_KEY = 'feedCardsActiveTab';
+
+  function getInitialTabTarget() {
+    var hashTarget = window.location.hash ? window.location.hash.slice(1) : '';
+    if (hashTarget && document.getElementById(hashTarget)) return hashTarget;
+
+    try {
+      var storedTarget = window.localStorage.getItem(ACTIVE_TAB_KEY);
+      if (storedTarget && document.getElementById(storedTarget)) return storedTarget;
+    } catch (e) {}
+
+    return 'panel-h';
+  }
+
+  function activateTab(target, shouldPersist) {
+    if (!document.getElementById(target)) target = 'panel-h';
+
+    document.querySelectorAll('.tabs__item').forEach(function(btn) {
+      btn.classList.toggle('tabs__item--active', btn.getAttribute('data-target') === target);
+    });
+    document.querySelectorAll('.tab-panel').forEach(function(panel) {
+      panel.classList.toggle('tab-panel--active', panel.id === target);
+    });
+
+    if (shouldPersist) {
+      try {
+        window.localStorage.setItem(ACTIVE_TAB_KEY, target);
+      } catch (e) {}
+    }
+  }
+
+  activateTab(getInitialTabTarget(), false);
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', runAll);
   } else {
@@ -1108,12 +1520,7 @@
   document.querySelectorAll('.tabs__item').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var target = btn.getAttribute('data-target');
-      document.querySelectorAll('.tabs__item').forEach(function(b) {
-        b.classList.toggle('tabs__item--active', b === btn);
-      });
-      document.querySelectorAll('.tab-panel').forEach(function(p) {
-        p.classList.toggle('tab-panel--active', p.id === target);
-      });
+      activateTab(target, true);
       // 切到竖向 tab 时重新计算瀑布流（display:none 时 clientWidth=0）
       runAll();
     });

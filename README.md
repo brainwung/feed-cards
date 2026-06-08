@@ -8,6 +8,7 @@ App 信息流基础卡片设计系统
 - ① **商品卡片 product-card** 
 - ② **原创卡片 article-card** 
 - ③ **视频卡片**（article-card 的 .deal-card--video 变体）
+- ④ **社区卡片 community-card**（大图 / 方图 / 视频模式）
 
 ## 快速预览
 
@@ -23,7 +24,14 @@ App 信息流基础卡片设计系统
 
 ## 版本历史
 
-### v2.3 (latest)
+### v2.4 (latest)
+- **社区卡片** `.deal-card--community`：单一社区频道专用，不参与首页商品/原创混排
+- **大图模式** `.deal-card--community-large`：单图 `341:146`
+- **方图模式** `.deal-card--community-square`：1~3 张 1:1 图片，固定 3 列，gap 6px；少于 3 图右侧留空
+- **视频模式** `.deal-card--community-video`：封面 `341:191`，左上角 22px 高时长角标
+- reference 页 tabs 支持刷新后保持当前 tab
+
+### v2.3
 - **视频变体** `.deal-card--video`：在 article-card 上叠加修饰类，封面叠加播放按钮
 - 横版：图片正中央 45px 圆 + 21px 图标
 - 竖版：右上角 18px 圆 + 10px 图标，距上/距右各 9px
@@ -96,14 +104,17 @@ App 信息流基础卡片设计系统
 │   ├── badge.png         # 徽标图（如"绝对值"）
 │   ├── shoe.png          # 商品图占位
 │   ├── article.png       # 原创卡片封面占位 (v2.0)
+│   ├── video.jpg         # 视频卡片封面占位 (v2.4)
 │   └── user.png          # 用户头像占位 (v2.0)
 ├── fonts/
 │   ├── price.ttf             # 价格主字体（PriceFont，工业风加粗）
 │   └── zhi-number-thin.ttf   # 价格细体（商品大标签用，v2.1）
 └── icons/
     ├── comment.svg       # 评论图标
+    ├── comment-r.svg     # 社区卡评论图标
     ├── zhi.svg           # "值"图标（商品卡推荐率）
     ├── thumb-up.svg      # 点赞图标 (v2.0 原创卡)
+    ├── topic-circle-fill.svg # 社区卡话题标签图标
     ├── topic-star.svg    # 话题入口图标 (v2.2)
     ├── play-fill.svg     # 视频播放图标 (v2.3)
     ├── yellow-v.png      # 黄 V 认证角标 (v2.0)
