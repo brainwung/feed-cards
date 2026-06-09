@@ -623,6 +623,13 @@
     font-weight: 400;
     line-height: 1.2;
   }
+  .deal-card__community-share-prefix {
+    flex: 0 0 auto;
+    margin-right: 0;
+    color: var(--c-text-primary);
+    font-size: 12px;
+    line-height: 1.2;
+  }
   .deal-card__community-badge {
     width: 15px;
     height: 15px;
@@ -722,6 +729,86 @@
     border-radius: 3px;
     object-fit: cover;
     display: block;
+  }
+  .deal-card__community-repost-card {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 110px;
+    margin-bottom: 12px;
+    border-radius: 3px;
+    background: var(--c-bg-product-tag);
+    overflow: hidden;
+  }
+  .deal-card__community-repost-image {
+    width: 110px;
+    height: 110px;
+    flex: 0 0 110px;
+    background: var(--c-bg-page);
+    overflow: hidden;
+  }
+  .deal-card__community-repost-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .deal-card__community-repost-info {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 9px 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .deal-card__community-repost-title {
+    margin: 0;
+    color: var(--c-text-primary);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .deal-card__community-repost-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 9px;
+    min-width: 0;
+  }
+  .deal-card__community-repost-author {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+  }
+  .deal-card__community-repost-avatar {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    margin-right: 6px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+  .deal-card__community-repost-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--c-text-muted);
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .deal-card__community-repost-source {
+    flex: 0 0 auto;
+    color: var(--c-text-muted);
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
   }
   .deal-card--community-video .deal-card__community-media {
     position: relative;
@@ -1177,7 +1264,63 @@
   </div>
 </a>
 
-<!-- ⑥ 社区卡片 · 视频模式（左上角播放角标，图片比例 341:191） -->
+<!-- ⑥ 社区卡片 · 转载模式（推荐 + 左图右文转载预览） -->
+<a class="deal-card deal-card--community deal-card--community-repost" href="#"
+   aria-label="推荐社区转载，来自小红书，作者 弥豆子米袋子，2600 条评论，4100 个赞"
+   style="margin-top: 5px;">
+  <div class="deal-card__community-head">
+    <span class="deal-card__community-share-prefix">分享自：</span>
+    <span class="deal-card__community-name">弥豆子米袋子</span>
+    <img class="deal-card__community-badge" src="./icons/yellow-v.png" alt="认证作者" />
+    <span class="deal-card__community-label">推荐</span>
+  </div>
+
+  <p class="deal-card__community-summary">
+    这篇小红书笔记把入门甜白的口感差异讲得很清楚，尤其适合还没建立酸甜偏好的朋友先做功课。
+    <span class="deal-card__community-more">全部</span>
+  </p>
+
+  <div class="deal-card__community-repost-card">
+    <span class="deal-card__community-repost-image">
+      <img src="./image/article.png" alt="小红书转载内容封面" />
+    </span>
+    <div class="deal-card__community-repost-info">
+      <h3 class="deal-card__community-repost-title">
+        第一次买德国雷司令怎么选？从酒标、甜度、酸度到餐搭，一篇笔记讲清楚。
+      </h3>
+      <div class="deal-card__community-repost-footer">
+        <span class="deal-card__community-repost-author">
+          <img class="deal-card__community-repost-avatar" src="./image/user.png" alt="" aria-hidden="true" />
+          <span class="deal-card__community-repost-name">酒窝收藏家</span>
+        </span>
+        <span class="deal-card__community-repost-source">来自小红书</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="deal-card__community-bottom">
+    <div class="deal-card__community-topics">
+      <span class="deal-tag deal-tag--community-topic">
+        <img class="deal-card__community-topic-icon" src="./icons/topic-circle-fill.svg" alt="" aria-hidden="true" />葡萄酒
+      </span>
+      <span class="deal-tag deal-tag--community-topic">
+        <img class="deal-card__community-topic-icon" src="./icons/topic-circle-fill.svg" alt="" aria-hidden="true" />小红书
+      </span>
+    </div>
+    <span class="deal-card__community-meta">
+      <span class="deal-card__meta-item" aria-label="2600 条评论">
+        <img class="deal-card__community-action-icon" src="./icons/comment-r.svg" alt="" aria-hidden="true" />
+        <span class="deal-card__community-meta-value">2.6k</span>
+      </span>
+      <span class="deal-card__meta-item" aria-label="4100 个赞">
+        <img class="deal-card__community-action-icon" src="./icons/thumb-up.svg" alt="" aria-hidden="true" />
+        <span class="deal-card__community-meta-value">4.1k</span>
+      </span>
+    </span>
+  </div>
+</a>
+
+<!-- ⑦ 社区卡片 · 视频模式（左上角播放角标，图片比例 341:191） -->
 <a class="deal-card deal-card--community deal-card--community-video" href="#"
    aria-label="原创社区视频，雷司令甜白怎么选，作者 弥豆子米袋子，5600 条评论，7900 个赞"
    style="margin-top: 5px;">
@@ -1227,7 +1370,7 @@
   </div>
 </a>
 
-<!-- ⑦ 社区卡片 · 方图模式（三张 1:1 小图，间距 6px） -->
+<!-- ⑧ 社区卡片 · 方图模式（三张 1:1 小图，间距 6px） -->
 <a class="deal-card deal-card--community deal-card--community-square" href="#"
    aria-label="原创社区内容，周末酒局三款甜白对比，作者 弥豆子米袋子，3200 条评论，4200 个赞"
    style="margin-top: 5px;">
