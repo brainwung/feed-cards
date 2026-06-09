@@ -1227,7 +1227,7 @@ interface TopicEntry {
 | 作者头像 | 15×15px，圆形 |
 | 用户名 / 原创 | 12px / 1.2 |
 | 标题 | 15px / 1.5 / 700 |
-| 摘要 | 13px / 1.5 / 400，最多 2 行 |
+| 摘要 | 13px / 1.5 / 400，最多 2 行；不满 2 行不显示"全部"，超过 2 行时右下角显示"全部" |
 | 作者 → 标题 | 9px |
 | 标题 → 摘要 | 5px |
 | 摘要 → 图片 | 9px |
@@ -1235,6 +1235,8 @@ interface TopicEntry {
 | 话题标签 | 高 24px，圆角 12px，文字 12px / 1.2 / 700，icon 18px |
 | 评论 / 点赞 icon | 20px，评论用 `icons/comment-r.svg` |
 | 评论 / 点赞数字 | 13px / 1.2 |
+
+摘要溢出规则：`.deal-card__community-more` 默认隐藏；JS 检测 `.deal-card__community-summary` 超出两行后添加 `.deal-card__community-summary--overflow`，摘要固定为两行高度，再显示"全部"。`全部` 区域宽 45px，高 1 行，字体 13px / 1.5 / 700，背景为从左到右的白色遮罩渐变：左侧 0% 透明度、35% 处约 100% 不透明度，即 `linear-gradient(90deg, rgba(255,255,255,0) 0%, #FFFFFF 35%, #FFFFFF 100%)`。
 
 ### 19.4 颜色与深色模式
 
