@@ -1236,7 +1236,7 @@ interface TopicEntry {
 | 评论 / 点赞 icon | 20px，评论用 `icons/comment-r.svg` |
 | 评论 / 点赞数字 | 13px / 1.2 |
 
-摘要溢出规则：`.deal-card__community-more` 默认隐藏；JS 检测 `.deal-card__community-summary` 超出两行后添加 `.deal-card__community-summary--overflow`，摘要固定为两行高度，再显示"全部"。`全部` 区域宽 45px，高 1 行，字体 13px / 1.5 / 700，背景为从左到右的白色遮罩渐变：左侧 0% 透明度、35% 处约 100% 不透明度，即 `linear-gradient(90deg, rgba(255,255,255,0) 0%, #FFFFFF 35%, #FFFFFF 100%)`。
+摘要溢出规则：`.deal-card__community-more` 默认隐藏；JS 检测 `.deal-card__community-summary` 超出两行后添加 `.deal-card__community-summary--overflow`，摘要固定为两行高度，再显示"全部"。`全部` 区域宽 45px，高 1 行，字体 13px / 1.5 / 700，背景为从左到右的遮罩渐变：左侧 0% 透明度、35% 处约 100% 不透明度；浅色用白色 `255,255,255`，深色用卡片底色 `34,34,34`，通过 `--c-community-summary-mask-rgb` 控制。
 
 ### 19.4 颜色与深色模式
 
