@@ -102,7 +102,7 @@ App 信息流基础卡片设计系统
 
 ```
 .
-├── SKILL.md              # Claude Code Skill 规范文档
+├── SKILL.md              # Codex Skill 权威规范文档
 ├── reference.html        # 标准实现示例
 ├── image/
 │   ├── badge.png         # 徽标图（如"绝对值"）
@@ -128,13 +128,13 @@ App 信息流基础卡片设计系统
     └── time.png          # 时钟（限时/倒计时，配橙色标签）
 ```
 
-## 在 Claude Code 中使用
+## 在 Codex 中使用
 
-把整个仓库放到 `~/.claude/skills/feed-cards/`，然后在 Claude Code 里说：
+把整个仓库放到 `~/.codex/skills/feed-cards/`，然后在 Codex 里说：
 
 > 用 feed-cards 生成一个国家补贴（标签带图标）、限时抢（不带图标）的横版商品卡片
 
-Claude 会读取 SKILL.md 与 reference.html，按规范生成卡片代码。
+Codex 会读取 SKILL.md 与 reference.html，按规范生成卡片代码。
 
 ## 设计规范摘要
 
